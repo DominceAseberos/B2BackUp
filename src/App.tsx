@@ -14,31 +14,6 @@ import { FloatingActionButton } from "./ui/FloatingActionButton";
 
 const BUSINESS = DEMO_BUSINESS;
 
-// Placeholder portals (future scope)
-function LguPortal() {
-  return (
-    <div className="shell">
-      <div className="page-head">
-        <span className="eyebrow">Government Dashboard</span>
-        <h2 className="title">LGU / DRRM Portal</h2>
-        <p className="subtitle">Disaster monitoring dashboard — coming soon.</p>
-      </div>
-    </div>
-  );
-}
-
-function LogisticsPortal() {
-  return (
-    <div className="shell">
-      <div className="page-head">
-        <span className="eyebrow">Transport Providers</span>
-        <h2 className="title">Logistics Portal</h2>
-        <p className="subtitle">Route status and truck tracking — coming soon.</p>
-      </div>
-    </div>
-  );
-}
-
 function SmePortal() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -183,8 +158,6 @@ export function App() {
         <Routes>
           <Route path="/sme/*" element={<SmePortal />} />
           <Route path="/supplier/*" element={<SupplierPortal />} />
-          <Route path="/lgu/*" element={<LguPortal />} />
-          <Route path="/logistics/*" element={<LogisticsPortal />} />
           <Route path="*" element={<Navigate to="/sme" replace />} />
         </Routes>
       </div>

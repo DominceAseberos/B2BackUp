@@ -239,7 +239,7 @@ export function AutoMatchScreen({ business, affectedPartner, onBack, onSelect }:
         </div>
 
         <div style={{ padding: "0 20px 16px" }}>
-          <span className="eyebrow">AI-Matched Replacements</span>
+          <span className="eyebrow">Automated Recommendations</span>
           <h1 className="title" style={{ fontSize: 24 }}>
             Top 3 {roleWord}{results.length !== 1 ? "s" : ""} recommended
           </h1>
