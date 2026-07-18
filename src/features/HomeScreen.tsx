@@ -4,7 +4,6 @@ import { ROLE_LABEL } from "../ui/labels";
 
 interface HomeScreenProps {
   business: BusinessProfile;
-  onReport: () => void;
   onFix: (partner: Partner) => void;
 }
 
@@ -13,7 +12,7 @@ function isDisrupted(partner: Partner): boolean {
 }
 
 /** Plain home screen: your business, your partners, and one clear action. */
-export function HomeScreen({ business, onReport, onFix }: HomeScreenProps) {
+export function HomeScreen({ business, onFix }: HomeScreenProps) {
   const partners = business.currentPartners;
   const disrupted = partners.filter(isDisrupted);
   const allWell = disrupted.length === 0;
@@ -65,11 +64,6 @@ export function HomeScreen({ business, onReport, onFix }: HomeScreenProps) {
         })}
       </div>
 
-      <div className="big-action">
-        <button type="button" className="btn btn--primary btn--block" onClick={onReport}>
-          Report a problem
-        </button>
-      </div>
     </div>
   );
 }

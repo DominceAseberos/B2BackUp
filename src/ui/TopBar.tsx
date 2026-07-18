@@ -1,21 +1,22 @@
 import { LinkMarkIcon } from "./icons";
+import { Link } from "react-router-dom";
 
 interface TopBarProps {
   tagline?: string;
 }
 
-/** Simple brand header. */
+/** Top app bar with B2BackUp branding. */
 export function TopBar({ tagline = "Supply chain recovery" }: TopBarProps) {
   return (
     <div className="topbar">
       <div className="topbar__inner">
-        <span className="brand">
+        <Link to="/sme" className="brand" style={{ textDecoration: "none", color: "inherit" }}>
           <span className="brand__mark" aria-hidden="true">
             <LinkMarkIcon size={16} />
           </span>
-          Tuloy
-        </span>
-        <span className="progress__step">{tagline}</span>
+          B2BackUp
+        </Link>
+        <span className="topbar__tagline">{tagline}</span>
       </div>
     </div>
   );
