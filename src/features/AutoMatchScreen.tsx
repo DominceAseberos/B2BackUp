@@ -1,11 +1,12 @@
 import { useMemo } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import { ArrowLeftIcon } from "../ui/icons";
 import { findAlternatives } from "../domain/matching";
 import { NETWORK } from "../domain/mockData";
 import { buildRecoveryNeed } from "../domain/recovery";
 import type { BusinessProfile, MatchResult, Partner } from "../domain/types";
-import { ArrowLeftIcon } from "../ui/icons";
 import { ROLE_LABEL } from "../ui/labels";
-import { distanceKm } from "../domain/geo";
 
 interface AutoMatchScreenProps {
   business: BusinessProfile;
@@ -144,6 +145,18 @@ function MatchCard({ result, rank, onSelect }: { result: MatchResult; rank: numb
   );
 }
 
+const createPin = (color: string) => L.divIcon({
+  className: "custom-pin",
+  html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${color}" width="28" height="28"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`,
+  iconSize: [28, 28],
+  iconAnchor: [14, 28],
+  popupAnchor: [0, -28],
+});
+
+const homeIcon = createPin("var(--ink)");
+const matchIcon = createPin("var(--brand)");
+const altIcon = createPin("var(--muted)");
+
 /** Auto-runs the matching algorithm and displays top 3 results immediately. No user input needed. */
 export function AutoMatchScreen({ business, affectedPartner, onBack, onSelect }: AutoMatchScreenProps) {
   const disruption = affectedPartner.role === "buyer" ? "buyer_unavailable" as const : "supplier_unavailable" as const;
@@ -151,54 +164,111 @@ export function AutoMatchScreen({ business, affectedPartner, onBack, onSelect }:
     () => buildRecoveryNeed(business, affectedPartner, disruption),
     [business, affectedPartner, disruption]
   );
+  
+  // Results are sorted highest score first
   const results = useMemo(() => findAlternatives(NETWORK, need), [need]);
   const roleWord = ROLE_LABEL[need.neededRole].toLowerCase();
 
+  const origin = [business.location.lat, business.location.lng] as [number, number];
+
   return (
-    <div className="shell">
-      <div className="page-head">
-        <button type="button" className="progress__back" aria-label="Back" onClick={onBack}>
-          <ArrowLeftIcon size={20} />
-        </button>
-        <span className="eyebrow">AI-Matched Replacements</span>
-        <h1 className="title">
-          Top {results.length} {roleWord}{results.length !== 1 ? "s" : ""} found
-        </h1>
-        <p className="subtitle">
-          Ranked by distance, price, capacity, reliability &amp; route status — replacing{" "}
-          <strong>{affectedPartner.name}</strong> automatically.
-        </p>
+    <div style={{ position: "relative", width: "100%", height: "100%", display: "flex", flexDirection: "column" }}>
+      {/* Background Map */}
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }}>
+        <MapContainer center={origin} zoom={7} style={{ height: "100%", width: "100%", zIndex: 0 }} zoomControl={false}>
+          <TileLayer
+            attribution='&copy; OpenStreetMap'
+            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+          />
+          
+          <Marker position={origin} icon={homeIcon}>
+            <Popup><strong>{business.name}</strong><br />Your location</Popup>
+          </Marker>
+
+          {results.map((r, i) => {
+            const dest = [r.partner.location.lat, r.partner.location.lng] as [number, number];
+            // Top 3 matches get the brand pin, others get the muted pin
+            const icon = i < 3 ? matchIcon : altIcon;
+            return (
+              <Marker key={r.partner.id} position={dest} icon={icon}>
+                <Popup>
+                  <strong>{r.partner.name}</strong><br />
+                  Match score: {r.total}%
+                </Popup>
+              </Marker>
+            );
+          })}
+        </MapContainer>
       </div>
 
-      {/* Summary chips */}
-      {results.length > 0 && (
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 14 }}>
-          <span className="badge badge--ok">
-            {Math.round(distanceKm(business.location, results[0].partner.location))} km closest
-          </span>
-          <span className="badge badge--ok">
-            ₱{results[0].partner.pricePhpPerTon.toLocaleString("en-PH")}/t best price
-          </span>
-          <span className="badge badge--neutral">
-            {results.filter(r => r.partner.verified).length} verified
-          </span>
-        </div>
-      )}
+      {/* Floating Header */}
+      <div style={{
+        position: "absolute",
+        top: 0, left: 0, right: 0,
+        padding: "16px",
+        zIndex: 10,
+        background: "linear-gradient(to bottom, rgba(243,241,233,0.9) 0%, rgba(243,241,233,0) 100%)",
+        pointerEvents: "none",
+      }}>
+        <button
+          type="button"
+          className="progress__back"
+          style={{ pointerEvents: "auto", background: "var(--surface)", boxShadow: "0 2px 8px rgba(0,0,0,0.05)" }}
+          onClick={onBack}
+        >
+          <ArrowLeftIcon size={20} />
+        </button>
+      </div>
 
-      <div className="section" style={{ paddingBottom: 80 }}>
-        {results.length === 0 ? (
-          <div style={{ padding: "32px 0", textAlign: "center" }}>
-            <div style={{ fontSize: 36, marginBottom: 12 }}>🔍</div>
-            <div style={{ fontWeight: 600, marginBottom: 6 }}>No replacements found</div>
-            <p className="subtitle">No available partners match your criteria right now. Try again as the network comes back online.</p>
-          </div>
-        ) : (
-          results.map((result, index) => (
-            <div key={result.partner.id} style={{ marginBottom: 16 }}>
-              <MatchCard result={result} rank={index} onSelect={onSelect} />
+      {/* Bottom Sheet / Modal Overlay */}
+      <div style={{
+        position: "absolute",
+        bottom: 0, left: 0, right: 0,
+        zIndex: 10,
+        background: "var(--surface)",
+        borderTopLeftRadius: 24,
+        borderTopRightRadius: 24,
+        boxShadow: "0 -4px 24px rgba(0,0,0,0.1)",
+        display: "flex",
+        flexDirection: "column",
+        maxHeight: "85%", // Allow map to show at top
+      }}>
+        {/* Drag handle pill */}
+        <div style={{ width: "100%", display: "flex", justifyContent: "center", paddingTop: 12, paddingBottom: 12 }}>
+          <div style={{ width: 40, height: 4, borderRadius: 2, background: "var(--hair)" }} />
+        </div>
+
+        <div style={{ padding: "0 20px 16px" }}>
+          <span className="eyebrow">AI-Matched Replacements</span>
+          <h1 className="title" style={{ fontSize: 24 }}>
+            Top 3 {roleWord}{results.length !== 1 ? "s" : ""} recommended
+          </h1>
+          <p className="subtitle" style={{ fontSize: 13, marginBottom: 0 }}>
+            {results.length} total options available on map.
+          </p>
+        </div>
+
+        {/* Scrollable list of cards */}
+        <div style={{
+          flex: 1,
+          overflowY: "auto",
+          padding: "0 20px 24px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 16,
+          scrollbarWidth: "none",
+        }}>
+          {results.length === 0 ? (
+            <div style={{ padding: "32px 0", textAlign: "center" }}>
+              <div style={{ fontSize: 36, marginBottom: 12 }}>🔍</div>
+              <div style={{ fontWeight: 600, marginBottom: 6 }}>No replacements found</div>
             </div>
-          ))
-        )}
+          ) : (
+            results.slice(0, 3).map((result, index) => (
+              <MatchCard key={result.partner.id} result={result} rank={index} onSelect={onSelect} />
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
