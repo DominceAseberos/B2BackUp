@@ -16,8 +16,8 @@
   --warn: #b7842a; /* caution: limited routes / at-risk */
   --warn-tint: #f4ecd8;
 
-  --font-display: "Fraunces", Georgia, serif;
-  --font-ui: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  --font-ui: "Inter", ui-sans-serif, system-ui, sans-serif;
 
   --radius: 12px;
   --radius-lg: 18px;
