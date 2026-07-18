@@ -17,7 +17,7 @@ SMEs depend heavily on established buyers and suppliers. Natural disasters (typh
 B2BackUp automatically:
 - Detects supply chain disruptions.
 - Identifies affected businesses (buyers and suppliers).
-- Searches for and ranks alternative partners based on multiple criteria (including logistics).
+- Searches for and ranks alternative partners based on multiple criteria.
 - Temporarily reroutes the supply chain for continuity.
 - Tracks and supports affected businesses until they recover and rejoin the network.
 
@@ -49,16 +49,14 @@ The system uniquely supports both sides of a disruption:
 - **SME (Business Owner):** Registers business, maps existing supply chains, reports disruptions, accepts recommendations.
 - **Buyer:** Registers buying requirements and capacity, receives supplier disruption notifications.
 - **Supplier:** Registers available products and capacity, receives buyer disruption notifications.
-- **Logistics Provider:** Updates vehicle type, capacity, availability, and route status.
-- **LGU / DRRM Officer:** Monitors affected businesses and views disaster impact reports.
 
 #### 3.2 Functional Requirements (Core subset)
-- **FR-01 User Authentication:** Registration and RBAC for SMEs, Logistics, and LGUs.
+- **FR-01 User Authentication:** Registration and RBAC for SMEs (Buyers/Suppliers).
 - **FR-02 Business Profile Management:** Capture business info, product info, and capacity.
 - **FR-03 Supply Chain Relationship Mapping:** Allow businesses to register their existing nodes (Supplier -> Processor -> Buyer).
-- **FR-04 Disaster Disruption Reporting:** Report supplier, buyer, or logistics disruptions (e.g., flooded roads).
+- **FR-04 Disaster Disruption Reporting:** Report supplier or buyer disruptions (e.g., flooded facilities).
 - **FR-05 Automated Disruption Detection:** Analyze reports and identify cascading effects on the supply chain.
-- **FR-06 Alternative Partner Matching Engine:** Automatically search and rank Top 3 available replacement partners.
+- **FR-06 Alternative Partner Matching Engine:** Automatically search and rank Top 3 available replacement partners based on distance and capacity.
 - **FR-07 Connection Management:** Accept/reject recommendations and manage temporary supply chain links.
 
 #### 3.3 Non-Functional Requirements
@@ -90,10 +88,6 @@ The system uniquely supports both sides of a disruption:
 ──────────────────────────────────────────────────────
  Business Connection Module
 ──────────────────────────────────────────────────────
- Logistics Module
-──────────────────────────────────────────────────────
- Recovery Monitoring & LGU Dashboard
-──────────────────────────────────────────────────────
 ```
 
 ---
@@ -101,17 +95,16 @@ The system uniquely supports both sides of a disruption:
 ### Chapter 5 — Algorithms
 
 #### 5.1 Supply Chain Recovery Algorithm (Ranking Formula)
-The matching engine evaluates available partners using a weighted formula. Logistics is a critical factor—finding another supplier is useless if the product cannot physically move.
+The matching engine evaluates available partners using a weighted formula. For the MVP, this relies purely on simple metrics like distance, capacity, and price to simulate a basic recommendation engine.
 
 **Evaluation Criteria & Example Weights:**
-- **Distance:** 30% (Proximity of the alternative partner)
-- **Product Match:** 25% (Compatibility of agricultural products)
+- **Distance:** 40% (Proximity of the alternative partner)
+- **Product Match:** 30% (Compatibility of agricultural products)
 - **Availability / Capacity:** 20% (Can they meet the demand?)
-- **Price:** 15% (Economic viability)
-- **Logistics:** 10% (Is the route open? Are trucks available?)
+- **Price:** 10% (Economic viability)
 
-**Logistics Impact Example:**
-Supplier B is 15km away but the route is flooded (Unavailable). Supplier C is 30km away but the route is open and trucks are available. The algorithm will rank Supplier C higher because physical transportation is guaranteed.
+**Impact Example:**
+Supplier B is 15km away and matches the exact coconut type required. They will rank higher than Supplier C, who is 30km away, provided Supplier B has enough capacity to fulfill the buyer's needs.
 
 ---
 
@@ -120,22 +113,20 @@ Supplier B is 15km away but the route is flooded (Unavailable). Supplier C is 30
 **Key Screens:**
 1. **Dashboard:** Overview of active supply chain health.
 2. **Supply Chain Map:** Visual representation of suppliers and buyers.
-3. **Report Disaster:** Quick-action screen to report floods, road blocks, or facility damage.
+3. **Report Disaster:** Quick-action screen to report floods or facility damage.
 4. **Recovery Dashboard:** Interface for reviewing the Top 3 recommended partners.
-5. **Logistics Portal:** Interface for transport providers to update route status (e.g., Davao → Tagum: 🔴 Blocked) and truck availability.
 
 ---
 
 ### Chapter 7 — Database Design
 
 **Core Tables:**
-- `Users`: Authentication, Roles (SME, Logistics, LGU).
+- `Users`: Authentication, Roles (SME, Buyer, Supplier).
 - `Businesses`: Profiles, capacities, locations.
 - `Products`: Categorization of agricultural goods (e.g., Copra, Whole Coconuts).
 - `Relationships`: The mapped supply chain connections (Buyer ID -> Supplier ID).
 - `Disruptions`: Logs of disaster events and affected nodes.
 - `RecoveryRequests`: Temporary connections made during a disaster.
-- `LogisticsStatus`: Real-time updates on route availability and transport capacity.
 
 ---
 
@@ -146,14 +137,13 @@ Supplier B is 15km away but the route is flooded (Unavailable). Supplier C is 30
 - **Disruption API:** Submit disaster reports, update recovery status.
 - **Matching API:** Trigger the ranking algorithm and return the Top 3 partners.
 - **Notification API:** Dispatch alerts to affected nodes.
-- **Logistics API:** Submit and retrieve route status and vehicle availability.
 
 ---
 
 ### Chapter 9 — Security
 
 - **Authentication:** JWT (JSON Web Tokens) for secure session management.
-- **Authorization:** RBAC (Role-Based Access Control) ensuring LGUs can only view data, while SMEs can only edit their own supply chain.
+- **Authorization:** RBAC (Role-Based Access Control) ensuring SMEs can only edit their own supply chain.
 - **Data Privacy:** Encryption of proprietary business relationships and pricing data.
 
 ---
@@ -164,15 +154,16 @@ Supplier B is 15km away but the route is flooded (Unavailable). Supplier C is 30
 The prototype will focus strictly on the core loop:
 - ✅ **Login & Business Registration**
 - ✅ **Create Supply Chain** (Map 1 supplier to 1 buyer)
-- ✅ **Report Disaster** (Mark a node or route as unavailable)
-- ✅ **Matching Engine** (Run the formula and output Top 3 Recommendations)
-- ✅ **Logistics Integration (Manual)** (Manual input of route availability and distance)
+- ✅ **Report Disaster** (Mark a node as unavailable)
+- ✅ **Matching Engine** (Run the formula and output Top 3 Recommendations based on distance/capacity)
 - ✅ **Send Notification & Accept Partner**
 - ✅ **Recovery Complete** (Temporary reroute established)
 
-#### 10.2 Future Scope
+#### 10.2 Future Scope (Post-MVP Roadmap)
+To scale the platform into a comprehensive, region-wide solution, the following features are planned for future development:
+- **Dedicated Logistics Provider Portal:** A portal for truck drivers and delivery companies to update vehicle availability and real-time route statuses (e.g., blocked roads).
+- **LGU / DRRM Dashboard:** An official integration for Local Government Units to validate disaster reports, issue official warnings, and monitor the economic health of affected areas.
 - Real-time disaster APIs and Satellite Imagery.
 - GPS tracking for logistics providers.
 - Road condition APIs (e.g., Waze/Google Maps integration).
 - Machine Learning for predictive disruption analysis and advanced ranking.
-- Automated LGU disaster reporting integration.
