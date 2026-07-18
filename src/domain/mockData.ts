@@ -187,9 +187,53 @@ export const DEMO_BUSINESS: BusinessProfile = {
 /** Fair reference prices (PHP/ton) used to flag post-disaster price gouging. */
 export const REFERENCE_PRICE: Record<string, number> = {
   copra: 41000,
+  whole_nut: 8500,
   coconut_oil: 68000,
   desiccated: 52000,
   coir: 18000,
   husk: 9000,
   coco_water: 26000,
+};
+
+/**
+ * Demo supplier profile: Kidapawan Farmers Assn. — used for the Supplier Portal.
+ * Shows live inventory of copra and whole nuts.
+ */
+export const DEMO_SUPPLIER = {
+  id: "s-farm-kidapawan",
+  name: "Kidapawan Farmers Assn.",
+  location: CITY.kidapawan,
+  verified: true,
+  rating: 4.6,
+  activeBuyerCount: 3,
+  disasterStatus: "unaffected" as const,
+  stock: [
+    {
+      product: "copra" as const,
+      label: "Copra",
+      availableTons: 82,
+      totalCapacityTons: 110,
+      pricePhpPerTon: 39500,
+      freshnessDays: 18,
+      routeStatus: "open" as const,
+    },
+    {
+      product: "whole_nut" as const,
+      label: "Whole Coconut",
+      availableTons: 34,
+      totalCapacityTons: 60,
+      pricePhpPerTon: 8200,
+      freshnessDays: 7,
+      routeStatus: "open" as const,
+    },
+    {
+      product: "husk" as const,
+      label: "Coconut Husk",
+      availableTons: 15,
+      totalCapacityTons: 40,
+      pricePhpPerTon: 9000,
+      freshnessDays: 30,
+      routeStatus: "limited" as const,
+    },
+  ],
 };

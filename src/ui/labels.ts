@@ -8,6 +8,7 @@ import type {
 
 export const PRODUCT_LABEL: Record<ProductType, string> = {
   copra: "Copra",
+  whole_nut: "Whole Coconut",
   coconut_oil: "Coconut oil",
   desiccated: "Desiccated coconut",
   coir: "Coir",

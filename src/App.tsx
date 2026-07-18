@@ -6,6 +6,7 @@ import type { MatchResult, Partner } from "./domain/types";
 import { HomeScreen } from "./features/HomeScreen";
 import { AutoMatchScreen } from "./features/AutoMatchScreen";
 import { ReconnectedScreen } from "./features/ReconnectedScreen";
+import { SupplierPortal } from "./features/SupplierPortal";
 import { TopBar } from "./ui/TopBar";
 import { BottomNav } from "./ui/BottomNav";
 import { FloatingActionButton } from "./ui/FloatingActionButton";
@@ -191,6 +192,7 @@ export function App() {
       <div className="screen-container">
         <Routes>
           <Route path="/sme/*" element={<SmePortal />} />
+          <Route path="/supplier/*" element={<SupplierPortal />} />
           <Route path="/lgu/*" element={<LguPortal />} />
           <Route path="/logistics/*" element={<LogisticsPortal />} />
           <Route path="*" element={<Navigate to="/sme" replace />} />

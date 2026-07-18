@@ -1135,8 +1135,7 @@ a {
 /* ---- Supply chain nodes ---- */
 .chain__node {
   display: flex;
-  align-items: center;
-  gap: 14px;
+  flex-direction: column;
   padding: 15px 16px;
   background: var(--surface);
   border: 1px solid var(--hair);
@@ -1153,8 +1152,7 @@ a {
 }
 
 .chain__body {
-  flex: 1;
-  min-width: 0;
+  width: 100%;
 }
 
 .chain__role {

@@ -2,11 +2,36 @@ export type PartnerRole = "buyer" | "supplier";
 
 export type ProductType =
   | "copra"
+  | "whole_nut"
   | "coconut_oil"
   | "desiccated"
   | "coir"
   | "husk"
   | "coco_water";
+
+/** A single line item in a supplier's live inventory. */
+export interface StockItem {
+  product: ProductType;
+  label: string;
+  availableTons: number;
+  totalCapacityTons: number;
+  pricePhpPerTon: number;
+  /** Days until the stock must move before quality degrades */
+  freshnessDays: number;
+  routeStatus: RouteStatus;
+}
+
+/** Supplier-specific profile for the Supplier Portal. */
+export interface SupplierProfile {
+  id: string;
+  name: string;
+  location: Location;
+  verified: boolean;
+  rating: number;
+  stock: StockItem[];
+  activeBuyerCount: number;
+  disasterStatus: DisasterStatus;
+}
 
 /** Operational impact of the current hazard on a business. */
 export type DisasterStatus = "unaffected" | "at_risk" | "affected";

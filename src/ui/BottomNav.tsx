@@ -1,26 +1,51 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Map as MapIcon, User } from "lucide-react";
+import { Home, Map, User, Package, ClipboardList } from "lucide-react";
 
-export function BottomNav() {
+const ICON_MAP = {
+  home: Home,
+  map: Map,
+  user: User,
+  package: Package,
+  receipt: ClipboardList,
+};
+
+interface Tab {
+  name: string;
+  path: string;
+  iconName: keyof typeof ICON_MAP;
+}
+
+interface BottomNavProps {
+  portalBase?: string;
+  tabs?: Tab[];
+}
+
+const SME_TABS: Tab[] = [
+  { name: "Home", path: "/sme", iconName: "home" },
+  { name: "Map", path: "/sme/map", iconName: "map" },
+  { name: "Profile", path: "/sme/profile", iconName: "user" },
+];
+
+export function BottomNav({ tabs = SME_TABS }: BottomNavProps) {
   const location = useLocation();
-
-  const tabs = [
-    { name: "Home", path: "/sme", icon: Home },
-    { name: "Map", path: "/sme/map", icon: MapIcon },
-    { name: "Profile", path: "/sme/profile", icon: User },
-  ];
 
   return (
     <nav className="bottomnav">
       {tabs.map((tab) => {
-        const isActive = location.pathname === tab.path || (tab.path === '/sme' && location.pathname.startsWith('/sme') && location.pathname.length > 5 === false);
+        // Active if exact match OR if we're on a sub-route of a non-root tab
+        const isActive =
+          location.pathname === tab.path ||
+          (tab.path !== "/sme" && tab.path !== "/supplier" && location.pathname.startsWith(tab.path));
+
+        const Icon = ICON_MAP[tab.iconName];
+
         return (
           <Link
             key={tab.name}
             to={tab.path}
             className={`bottomnav__tab ${isActive ? "bottomnav__tab--active" : ""}`}
           >
-            <tab.icon size={22} strokeWidth={isActive ? 2.5 : 2} />
+            <Icon size={22} strokeWidth={isActive ? 2.5 : 1.75} />
             <span className="bottomnav__label">{tab.name}</span>
           </Link>
         );

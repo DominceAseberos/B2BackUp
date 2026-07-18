@@ -87,49 +87,53 @@ export function HomeScreen({ business, onFix }: HomeScreenProps) {
 
           return (
             <div key={partner.id} className={`chain__node${down ? " chain__node--alert" : ""}`}>
-              <div className="chain__body">
+              {/* Top row: role + status pill */}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <div className="chain__role">{ROLE_LABEL[partner.role]}</div>
-                <div className="chain__name">{partner.name}</div>
-                <div className="chain__meta">
-                  <PinIcon size={12} /> {partner.location.name}
-                </div>
-
-                {/* Reason why — shown only for disrupted partners */}
-                {reason && (
-                  <div style={{
-                    marginTop: 8,
-                    padding: "8px 10px",
-                    borderRadius: 8,
-                    background: "var(--alert-tint)",
-                    border: "1px solid color-mix(in srgb, var(--alert) 20%, var(--hair))",
-                  }}>
-                    <div style={{ fontWeight: 600, fontSize: 13, color: "var(--alert)", marginBottom: 2 }}>
-                      {reason.icon} {reason.label}
-                    </div>
-                    <div style={{ fontSize: 12.5, color: "color-mix(in srgb, var(--ink) 75%, var(--alert))", lineHeight: 1.4 }}>
-                      {reason.detail}
-                    </div>
-                  </div>
-                )}
-
-                {/* At-risk warning for still-active partners */}
-                {warn && (
-                  <span className={warn.cls} style={{ marginTop: 6, display: "inline-flex" }}>
-                    {warn.label}
+                {!down && (
+                  <span className={`badge ${warn ? warn.cls.replace("badge ", "") : "badge--ok"}`}>
+                    {warn ? warn.label : "Active"}
                   </span>
+                )}
+                {down && (
+                  <span className="badge badge--alert">Disrupted</span>
                 )}
               </div>
 
-              {down && (
-                <div style={{ marginTop: 12 }}>
-                  <button
-                    type="button"
-                    className="btn btn--primary btn--block"
-                    onClick={() => onFix(partner)}
-                  >
-                    Find a replacement →
-                  </button>
+              {/* Partner name + location */}
+              <div className="chain__name" style={{ marginTop: 4 }}>{partner.name}</div>
+              <div className="chain__meta">
+                <PinIcon size={12} /> {partner.location.name}
+              </div>
+
+              {/* Reason why — full width, stacked below */}
+              {reason && (
+                <div style={{
+                  marginTop: 10,
+                  padding: "10px 12px",
+                  borderRadius: 8,
+                  background: "rgba(198,71,43,0.08)",
+                  border: "1px solid rgba(198,71,43,0.2)",
+                }}>
+                  <div style={{ fontWeight: 600, fontSize: 13, color: "var(--alert)", marginBottom: 3 }}>
+                    {reason.icon} {reason.label}
+                  </div>
+                  <div style={{ fontSize: 12.5, color: "var(--ink)", lineHeight: 1.45, opacity: 0.8 }}>
+                    {reason.detail}
+                  </div>
                 </div>
+              )}
+
+              {/* Find replacement — full width button */}
+              {down && (
+                <button
+                  type="button"
+                  className="btn btn--primary btn--block"
+                  style={{ marginTop: 12 }}
+                  onClick={() => onFix(partner)}
+                >
+                  Find a replacement →
+                </button>
               )}
             </div>
           );
