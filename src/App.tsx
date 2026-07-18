@@ -7,6 +7,7 @@ import { HomeScreen } from "./features/HomeScreen";
 import { AutoMatchScreen } from "./features/AutoMatchScreen";
 import { ReconnectedScreen } from "./features/ReconnectedScreen";
 import { SupplierPortal } from "./features/SupplierPortal";
+import { NetworkMapScreen } from "./features/NetworkMapScreen";
 import { TopBar } from "./ui/TopBar";
 import { BottomNav } from "./ui/BottomNav";
 import { FloatingActionButton } from "./ui/FloatingActionButton";
@@ -126,18 +127,7 @@ function SmePortal() {
           />
           <Route
             path="map"
-            element={
-              <div className="shell">
-                <div className="page-head">
-                  <span className="eyebrow">Supply Chain Logistics</span>
-                  <h2 className="title">Map View</h2>
-                  <p className="subtitle">Visualizing {BUSINESS.name}'s connections.</p>
-                </div>
-                <div style={{ height: "380px", background: "var(--surface-sunk)", borderRadius: "var(--radius)", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid var(--hair)" }}>
-                  <span style={{ fontSize: "40px" }}>🗺️</span>
-                </div>
-              </div>
-            }
+            element={<NetworkMapScreen />}
           />
           <Route
             path="profile"
