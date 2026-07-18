@@ -193,6 +193,306 @@ function SupplierHome() {
   );
 }
 
+type OrderStatus = "pending" | "confirmed" | "in_transit" | "completed" | "cancelled";
+
+interface MockOrder {
+  id: string;
+  buyer: string;
+  location: string;
+  product: string;
+  tons: number;
+  pricePhpPerTon: number;
+  status: OrderStatus;
+  date: string;
+  eta?: string;
+}
+
+const MOCK_ORDERS: MockOrder[] = [
+  {
+    id: "ORD-2024-001",
+    buyer: "Digos Copra Milling Co-op",
+    location: "Digos, Davao del Sur",
+    product: "Copra",
+    tons: 30,
+    pricePhpPerTon: 39500,
+    status: "in_transit",
+    date: "Jul 17, 2026",
+    eta: "Jul 19, 2026",
+  },
+  {
+    id: "ORD-2024-002",
+    buyer: "Koronadal Coco Oil Refiners",
+    location: "Koronadal, South Cotabato",
+    product: "Copra",
+    tons: 20,
+    pricePhpPerTon: 39500,
+    status: "pending",
+    date: "Jul 18, 2026",
+  },
+  {
+    id: "ORD-2024-003",
+    buyer: "SouthPoint Oleochemicals",
+    location: "General Santos",
+    product: "Whole Coconut",
+    tons: 15,
+    pricePhpPerTon: 8200,
+    status: "pending",
+    date: "Jul 18, 2026",
+  },
+  {
+    id: "ORD-2024-004",
+    buyer: "Tagum Valley Traders",
+    location: "Tagum, Davao del Norte",
+    product: "Copra",
+    tons: 25,
+    pricePhpPerTon: 39000,
+    status: "completed",
+    date: "Jul 14, 2026",
+  },
+  {
+    id: "ORD-2024-005",
+    buyer: "Northern Mindanao Coco Exporters",
+    location: "Cagayan de Oro",
+    product: "Coconut Husk",
+    tons: 10,
+    pricePhpPerTon: 9000,
+    status: "cancelled",
+    date: "Jul 12, 2026",
+  },
+];
+
+const STATUS_CONFIG: Record<OrderStatus, { label: string; color: string; bg: string; icon: string }> = {
+  pending:    { label: "Pending",    color: "var(--warn)",   bg: "var(--warn-tint)",   icon: "⏳" },
+  confirmed:  { label: "Confirmed",  color: "var(--brand)",  bg: "var(--brand-tint)",  icon: "✅" },
+  in_transit: { label: "In Transit", color: "#2563eb",       bg: "#eff6ff",             icon: "🚚" },
+  completed:  { label: "Completed",  color: "var(--brand)",  bg: "var(--brand-tint)",  icon: "✓"  },
+  cancelled:  { label: "Cancelled",  color: "var(--muted)",  bg: "var(--surface-sunk)", icon: "✕" },
+};
+
+function OrderCard({ order, onAccept, onDecline }: {
+  order: MockOrder;
+  onAccept?: (id: string) => void;
+  onDecline?: (id: string) => void;
+}) {
+  const cfg = STATUS_CONFIG[order.status];
+  const total = order.tons * order.pricePhpPerTon;
+
+  return (
+    <div style={{
+      background: "var(--surface)",
+      border: "1.5px solid var(--hair)",
+      borderRadius: "var(--radius-lg)",
+      overflow: "hidden",
+    }}>
+      {/* Header row */}
+      <div style={{
+        padding: "12px 14px",
+        borderBottom: "1px solid var(--hair)",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}>
+        <span style={{ fontSize: 12, color: "var(--muted)", fontWeight: 500 }}>{order.id}</span>
+        <span style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 4,
+          padding: "3px 10px",
+          borderRadius: 999,
+          background: cfg.bg,
+          color: cfg.color,
+          fontSize: 12,
+          fontWeight: 600,
+        }}>
+          {cfg.icon} {cfg.label}
+        </span>
+      </div>
+
+      {/* Order body */}
+      <div style={{ padding: "14px" }}>
+        <div style={{ fontWeight: 600, fontSize: 15 }}>{order.buyer}</div>
+        <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 2 }}>📍 {order.location}</div>
+
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 8,
+          marginTop: 12,
+        }}>
+          <div style={{ background: "var(--surface-sunk)", borderRadius: 8, padding: "8px 10px" }}>
+            <div style={{ fontSize: 11, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em" }}>Product</div>
+            <div style={{ fontWeight: 600, fontSize: 13, marginTop: 2 }}>{order.product}</div>
+          </div>
+          <div style={{ background: "var(--surface-sunk)", borderRadius: 8, padding: "8px 10px" }}>
+            <div style={{ fontSize: 11, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em" }}>Volume</div>
+            <div style={{ fontWeight: 600, fontSize: 13, marginTop: 2 }}>{order.tons} tons</div>
+          </div>
+          <div style={{ background: "var(--surface-sunk)", borderRadius: 8, padding: "8px 10px" }}>
+            <div style={{ fontSize: 11, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em" }}>Unit price</div>
+            <div style={{ fontWeight: 600, fontSize: 13, marginTop: 2 }}>₱{order.pricePhpPerTon.toLocaleString("en-PH")}/t</div>
+          </div>
+          <div style={{ background: "var(--brand-tint)", borderRadius: 8, padding: "8px 10px" }}>
+            <div style={{ fontSize: 11, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em" }}>Total</div>
+            <div style={{ fontWeight: 700, fontSize: 13, color: "var(--brand)", marginTop: 2 }}>₱{total.toLocaleString("en-PH")}</div>
+          </div>
+        </div>
+
+        {order.eta && (
+          <div style={{ marginTop: 10, fontSize: 12.5, color: "#2563eb", fontWeight: 500 }}>
+            🚚 ETA: {order.eta}
+          </div>
+        )}
+        <div style={{ marginTop: 4, fontSize: 12, color: "var(--muted)" }}>Ordered: {order.date}</div>
+      </div>
+
+      {/* Actions for pending orders only */}
+      {order.status === "pending" && onAccept && onDecline && (
+        <div style={{
+          padding: "12px 14px",
+          borderTop: "1px solid var(--hair)",
+          display: "flex",
+          gap: 8,
+        }}>
+          <button
+            type="button"
+            className="btn btn--ghost"
+            style={{ flex: 1, height: 40, fontSize: 13 }}
+            onClick={() => onDecline(order.id)}
+          >
+            Decline
+          </button>
+          <button
+            type="button"
+            className="btn btn--primary"
+            style={{ flex: 2, height: 40, fontSize: 13 }}
+            onClick={() => onAccept(order.id)}
+          >
+            ✓ Accept Order
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+import { useState } from "react";
+
+function SupplierOrders() {
+  const [orders, setOrders] = useState<MockOrder[]>(MOCK_ORDERS);
+
+  const pending   = orders.filter(o => o.status === "pending");
+  const active    = orders.filter(o => o.status === "in_transit" || o.status === "confirmed");
+  const history   = orders.filter(o => o.status === "completed" || o.status === "cancelled");
+
+  const accept = (id: string) =>
+    setOrders(prev => prev.map(o => o.id === id ? { ...o, status: "confirmed" as OrderStatus } : o));
+  const decline = (id: string) =>
+    setOrders(prev => prev.map(o => o.id === id ? { ...o, status: "cancelled" as OrderStatus } : o));
+
+  const totalPending = pending.reduce((s, o) => s + o.tons * o.pricePhpPerTon, 0);
+
+  return (
+    <div className="shell" style={{ paddingBottom: 100 }}>
+      <div className="page-head">
+        <span className="eyebrow">Buyer Requests</span>
+        <h1 className="title">Orders</h1>
+        <p className="subtitle">
+          Manage incoming purchase requests from buyers across the network.
+        </p>
+      </div>
+
+      {/* Pending value summary */}
+      {pending.length > 0 && (
+        <div style={{
+          marginTop: 14,
+          padding: "12px 16px",
+          borderRadius: "var(--radius)",
+          background: "var(--warn-tint)",
+          border: "1px solid color-mix(in srgb, var(--warn) 30%, var(--hair))",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}>
+          <div>
+            <div style={{ fontWeight: 600, fontSize: 14, color: "var(--warn)" }}>⏳ {pending.length} order{pending.length > 1 ? "s" : ""} awaiting your response</div>
+            <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 1 }}>Total value: ₱{totalPending.toLocaleString("en-PH")}</div>
+          </div>
+        </div>
+      )}
+
+      {/* Pending */}
+      {pending.length > 0 && (
+        <div className="section">
+          <div className="section__label">
+            <h2>Needs action</h2>
+            <span className="section__count">{pending.length}</span>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {pending.map(o => (
+              <OrderCard key={o.id} order={o} onAccept={accept} onDecline={decline} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* In transit / confirmed */}
+      {active.length > 0 && (
+        <div className="section">
+          <div className="section__label">
+            <h2>Active</h2>
+            <span className="section__count">{active.length}</span>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {active.map(o => <OrderCard key={o.id} order={o} />)}
+          </div>
+        </div>
+      )}
+
+      {/* History */}
+      {history.length > 0 && (
+        <div className="section">
+          <div className="section__label">
+            <h2>History</h2>
+            <span className="section__count">{history.length}</span>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {history.map(o => <OrderCard key={o.id} order={o} />)}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SupplierProfile() {
+  return (
+    <div className="shell" style={{ paddingBottom: 100 }}>
+      <div className="page-head">
+        <span className="eyebrow">Account</span>
+        <h1 className="title">Profile</h1>
+      </div>
+      <div className="grid">
+        <div className="stat">
+          <div className="stat__label">Business Name</div>
+          <div className="stat__value" style={{ fontSize: 17 }}>{SUPPLIER.name}</div>
+        </div>
+        <div className="stat">
+          <div className="stat__label">Location</div>
+          <div className="stat__value" style={{ fontSize: 17 }}>{SUPPLIER.location.name}</div>
+        </div>
+        <div className="stat">
+          <div className="stat__value">★ {SUPPLIER.rating}</div>
+          <div className="stat__label">Verified supplier</div>
+        </div>
+        <div className="stat">
+          <div className="stat__value">{SUPPLIER.activeBuyerCount}</div>
+          <div className="stat__label">Active buyers</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /** Supplier Portal — accessible via /supplier */
 export function SupplierPortal() {
   return (
@@ -200,13 +500,15 @@ export function SupplierPortal() {
       <div className="screen-content">
         <Routes>
           <Route index element={<SupplierHome />} />
+          <Route path="orders" element={<SupplierOrders />} />
+          <Route path="profile" element={<SupplierProfile />} />
           <Route path="*" element={<Navigate to="/supplier" replace />} />
         </Routes>
       </div>
       <BottomNav tabs={[
         { name: "Inventory", path: "/supplier", iconName: "home" },
-        { name: "Orders", path: "/supplier/orders", iconName: "receipt" },
-        { name: "Profile", path: "/supplier/profile", iconName: "user" },
+        { name: "Orders",    path: "/supplier/orders",  iconName: "receipt" },
+        { name: "Profile",  path: "/supplier/profile", iconName: "user" },
       ]} />
     </div>
   );
