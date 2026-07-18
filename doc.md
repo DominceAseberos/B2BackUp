@@ -51,7 +51,7 @@ The system uniquely supports both sides of a disruption:
 - **Supplier:** Registers available products and capacity, receives buyer disruption notifications.
 
 #### 3.2 Functional Requirements (Core subset)
-- **FR-01 User Authentication:** Registration and RBAC for SMEs (Buyers/Suppliers).
+- **FR-01 User Authentication:** Registration and RBAC for SMEs (Buyers/Suppliers). *(Mocked for MVP)*
 - **FR-02 Business Profile Management:** Capture business info, product info, and capacity.
 - **FR-03 Supply Chain Relationship Mapping:** Allow businesses to register their existing nodes (Supplier -> Processor -> Buyer).
 - **FR-04 Disaster Disruption Reporting:** Report supplier or buyer disruptions (e.g., flooded facilities).
@@ -118,7 +118,9 @@ Supplier B is 15km away and matches the exact coconut type required. They will r
 
 ---
 
-### Chapter 7 — Database Design
+### Chapter 7 — Database Design *(Future Scope for MVP)*
+
+*Note: For the hackathon MVP, the database is mocked locally on the frontend (e.g., `mockData.ts`) to ensure a flawless and lightning-fast demonstration. The schemas below represent the target production architecture.*
 
 **Core Tables:**
 - `Users`: Authentication, Roles (SME, Buyer, Supplier).
@@ -130,7 +132,9 @@ Supplier B is 15km away and matches the exact coconut type required. They will r
 
 ---
 
-### Chapter 8 — API Design
+### Chapter 8 — API Design *(Future Scope for MVP)*
+
+*Note: For the MVP, all business logic and matching algorithms are executed locally on the frontend against the mocked state.*
 
 - **Authentication API:** Login, JWT generation, Role verification.
 - **Businesses API:** CRUD for business profiles and supply chain mapping.
@@ -140,7 +144,7 @@ Supplier B is 15km away and matches the exact coconut type required. They will r
 
 ---
 
-### Chapter 9 — Security
+### Chapter 9 — Security *(Future Scope for MVP)*
 
 - **Authentication:** JWT (JSON Web Tokens) for secure session management.
 - **Authorization:** RBAC (Role-Based Access Control) ensuring SMEs can only edit their own supply chain.
@@ -150,17 +154,19 @@ Supplier B is 15km away and matches the exact coconut type required. They will r
 
 ### Chapter 10 — MVP & Future Scope
 
-#### 10.1 MVP Scope (Demo Ready)
-The prototype will focus strictly on the core loop:
-- ✅ **Login & Business Registration**
-- ✅ **Create Supply Chain** (Map 1 supplier to 1 buyer)
-- ✅ **Report Disaster** (Mark a node as unavailable)
-- ✅ **Matching Engine** (Run the formula and output Top 3 Recommendations based on distance/capacity)
-- ✅ **Send Notification & Accept Partner**
-- ✅ **Recovery Complete** (Temporary reroute established)
+#### 10.1 MVP Scope (Static Prototype)
+To ensure reliability and focus entirely on the core value proposition (the Matching Algorithm and Workflow), the MVP is built as a **Static Frontend Application** using hardcoded mock data.
+
+The prototype strictly demonstrates:
+- ✅ **Mocked State:** Pre-configured mock data representing businesses, products, and an active supply chain.
+- ✅ **Report Disaster:** The ability for a user to mark a node as flooded/unavailable.
+- ✅ **Matching Engine (Frontend Logic):** The algorithm runs entirely in the browser to process the mocked data and output Top 3 Recommendations based on distance/capacity.
+- ✅ **Send Notification & Accept Partner:** UI simulation of notifications and accepting a partner.
+- ✅ **Recovery Complete:** Visual update showing the temporary reroute has been established.
 
 #### 10.2 Future Scope (Post-MVP Roadmap)
 To scale the platform into a comprehensive, region-wide solution, the following features are planned for future development:
+- **Live Backend API & Database:** Transitioning from the static mock data to a fully scalable cloud database (e.g., PostgreSQL via Supabase) and a Node/Express REST API.
 - **Dedicated Logistics Provider Portal:** A portal for truck drivers and delivery companies to update vehicle availability and real-time route statuses (e.g., blocked roads).
 - **LGU / DRRM Dashboard:** An official integration for Local Government Units to validate disaster reports, issue official warnings, and monitor the economic health of affected areas.
 - Real-time disaster APIs and Satellite Imagery.
