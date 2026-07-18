@@ -1305,6 +1305,13 @@ a {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   padding-bottom: 24px;
+  /* Hide scrollbar — Chrome/Safari/Edge */
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE/Edge legacy */
+}
+
+.screen-content::-webkit-scrollbar {
+  display: none;                /* Chrome, Safari, Opera */
 }
 
 /* ---- FAB (Floating Action Button) ---- */
