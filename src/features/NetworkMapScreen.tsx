@@ -15,6 +15,18 @@ L.Icon.Default.mergeOptions({
 
 
 
+const createPin = (color: string) => L.divIcon({
+  className: "custom-pin",
+  html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${color}" width="28" height="28"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`,
+  iconSize: [28, 28],
+  iconAnchor: [14, 28],
+  popupAnchor: [0, -28],
+});
+
+const okIcon = createPin("var(--brand)");
+const alertIcon = createPin("var(--alert)");
+
+
 export function NetworkMapScreen() {
   const origin = [DEMO_BUSINESS.location.lat, DEMO_BUSINESS.location.lng] as [number, number];
 
@@ -34,7 +46,7 @@ export function NetworkMapScreen() {
           />
 
           {/* Business (origin) marker */}
-          <Marker position={origin}>
+          <Marker position={origin} icon={okIcon}>
             <Popup>
               <strong>{DEMO_BUSINESS.name}</strong>
               <br />
@@ -51,7 +63,7 @@ export function NetworkMapScreen() {
             return (
               <div key={partner.id}>
                 <Polyline positions={[origin, dest]} color={color} weight={2} opacity={0.6} dashArray={isDown ? "5, 5" : undefined} />
-                <Marker position={dest}>
+                <Marker position={dest} icon={isDown ? alertIcon : okIcon}>
                   <Popup>
                     <strong>{partner.name}</strong>
                     <br />
