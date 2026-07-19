@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { DEMO_BUSINESS } from "./domain/mockData";
 import type { MatchResult, Partner } from "./domain/types";
 
@@ -13,6 +13,8 @@ import { DiscoverPartnersMapScreen } from "./features/DiscoverPartnersMapScreen"
 import { NotificationsScreen } from "./features/NotificationsScreen";
 import { TopBar } from "./ui/TopBar";
 import { BottomNav } from "./ui/BottomNav";
+import { PlaceholderScreen } from "./ui/PlaceholderScreen";
+import { ClipboardList, MessageSquare, User } from "lucide-react";
 
 const BUSINESS = DEMO_BUSINESS;
 
@@ -75,9 +77,9 @@ function SmePortal() {
             }
           />
           <Route path="ai-bcp" element={<AIBcpScreen />} />
-          <Route path="requests" element={<div style={{ padding: 40, textAlign: "center" }}>My Requests (Coming Soon)</div>} />
-          <Route path="messages" element={<div style={{ padding: 40, textAlign: "center" }}>Messages (Coming Soon)</div>} />
-          <Route path="profile" element={<div style={{ padding: 40, textAlign: "center" }}>Profile</div>} />
+          <Route path="requests" element={<PlaceholderScreen title="My Requests" icon={<ClipboardList size={48} />} description="Track your pending and active match requests here." />} />
+          <Route path="messages" element={<PlaceholderScreen title="Messages" icon={<MessageSquare size={48} />} description="Chat directly with matched partners." />} />
+          <Route path="profile" element={<PlaceholderScreen title="Profile" icon={<User size={48} />} description="Manage your business profile and preferences." />} />
           <Route
             path="reconnected"
             element={
