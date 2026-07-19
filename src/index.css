@@ -1322,12 +1322,9 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--alert);
-  color: #ffffff;
   padding: 14px 20px;
   border-radius: 999px;
   border: none;
-  box-shadow: 0 4px 14px rgba(198, 71, 43, 0.4);
   font-weight: 600;
   font-size: 15px;
   letter-spacing: 0.01em;
@@ -1335,9 +1332,26 @@ a {
   transition: transform 150ms ease, box-shadow 150ms ease;
 }
 
+.fab--alert {
+  background: var(--alert);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(198, 71, 43, 0.4);
+}
+.fab--alert:active {
+  box-shadow: 0 2px 8px rgba(198, 71, 43, 0.3);
+}
+
+.fab--primary {
+  background: var(--brand);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(30, 110, 79, 0.4);
+}
+.fab--primary:active {
+  box-shadow: 0 2px 8px rgba(30, 110, 79, 0.3);
+}
+
 .fab:active {
   transform: translateY(2px) scale(0.98);
-  box-shadow: 0 2px 8px rgba(198, 71, 43, 0.3);
 }
 
 .fab__icon {

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
+import { Plus } from "lucide-react";
 import { DEMO_BUSINESS } from "./domain/mockData";
 import type { MatchResult, Partner } from "./domain/types";
 
@@ -33,17 +34,7 @@ function SmePortal() {
     navigate("/sme/match");
   };
 
-  /** FAB: re-use handleFix on the first disrupted partner automatically */
-  const handleFab = () => {
-    const disrupted = BUSINESS.currentPartners.find(
-      (p) => p.disasterStatus === "affected" || p.routeStatus === "blocked"
-    );
-    if (disrupted) {
-      handleFix(disrupted);
-    } else {
-      navigate("/sme/match-all");
-    }
-  };
+
 
   const isHome = location.pathname === "/sme" || location.pathname === "/sme/";
 
@@ -136,7 +127,7 @@ function SmePortal() {
         </Routes>
       </div>
 
-      {isHome && <FloatingActionButton onClick={handleFab} />}
+      {isHome && <FloatingActionButton onClick={() => {}} label="New Partner" icon={<Plus size={24} />} variant="primary" />}
       <BottomNav />
     </div>
   );
