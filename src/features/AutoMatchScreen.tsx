@@ -98,6 +98,10 @@ function MatchCard({ result, rank, onSelect }: { result: MatchResult; rank: numb
               📍 {partner.location.name}
               {partner.verified && <span style={{ marginLeft: 8, color: "var(--brand)" }}>✓ Verified</span>}
             </div>
+            <div style={{ fontSize: 12.5, color: "var(--ink)", marginTop: 4, fontWeight: 500 }}>
+              {partner.role === "buyer" ? "🛒 Buying: " : "📦 Supplying: "}
+              {partner.products.map(p => p.replace("copra", "Coconut").replace(/_/g, " ")).join(", ")}
+            </div>
           </div>
           {/* Score ring */}
           <div style={{
