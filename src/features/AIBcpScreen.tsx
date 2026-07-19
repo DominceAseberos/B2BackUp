@@ -53,8 +53,9 @@ export function AIBcpScreen() {
               <div>
                 <h3 style={{ margin: "0 0 6px", fontSize: 16 }}>Immediate Risk Assessment</h3>
                 <p style={{ margin: 0, fontSize: 14, color: "var(--ink)", lineHeight: 1.5 }}>
-                  The active disaster zone heavily impacts your primary logistics route. 
-                  <strong style={{ color: "var(--alert)" }}> High risk of coconut spoilage</strong> within 7 days if inventory is not moved immediately.
+                  Typhoon Kristine is tracking directly over your Cooperative HQ in Davao Region. 
+                  <strong style={{ color: "var(--alert)" }}> 3 of your registered members</strong> (Juan, Maria, Pedro) are in the high-risk flood zone. 
+                  An estimated <strong style={{ color: "var(--alert)" }}>65 Tons of Copra inventory</strong> is at severe risk of water damage within 48 hours.
                 </p>
               </div>
             </div>
@@ -69,9 +70,9 @@ export function AIBcpScreen() {
                 <ShieldCheck size={24} />
               </div>
               <div>
-                <h3 style={{ margin: "0 0 6px", fontSize: 16 }}>Action 1: Secure Assets</h3>
+                <h3 style={{ margin: "0 0 6px", fontSize: 16 }}>Action 1: Member Coordination</h3>
                 <p style={{ margin: 0, fontSize: 14, color: "var(--ink)", lineHeight: 1.5 }}>
-                  Evacuate remaining perishable inventory to the secondary inland warehouse. B2BackUp has automatically updated your availability status to prevent new inbound shipments.
+                  Automatically issued an emergency SMS broadcast to all 3 affected members to halt harvesting and elevate existing stock. Their outbound delivery schedules have been temporarily frozen to prevent logistics failures.
                 </p>
               </div>
             </div>
@@ -86,9 +87,9 @@ export function AIBcpScreen() {
                 <Truck size={24} />
               </div>
               <div>
-                <h3 style={{ margin: "0 0 6px", fontSize: 16 }}>Action 2: Reroute Freight</h3>
+                <h3 style={{ margin: "0 0 6px", fontSize: 16 }}>Action 2: Prevent Contract Failure</h3>
                 <p style={{ margin: 0, fontSize: 14, color: "var(--ink)", lineHeight: 1.5 }}>
-                  Algorithm identified a safe corridor via the eastern highway. We have requested priority freight quotes from 3 available logistics partners outside the disaster zone.
+                  To prevent defaulting on your buyer contracts, the system suggests diverting fulfillment to unaffected cooperative members in neighboring regions. You have enough surplus inventory outside the disaster zone to maintain 80% of your committed volume.
                 </p>
               </div>
             </div>
