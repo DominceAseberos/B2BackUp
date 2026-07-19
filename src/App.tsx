@@ -143,6 +143,39 @@ function SmePortal() {
                     <div className="stat__value">{BUSINESS.currentPartners.length}</div>
                   </div>
                 </div>
+
+                <div style={{ marginTop: 32 }}>
+                  <h3 style={{ margin: "0 0 16px", fontSize: 16, fontWeight: 600 }}>Cooperative Members Directory</h3>
+                  {BUSINESS.members && BUSINESS.members.length > 0 ? (
+                    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                      {BUSINESS.members.map(member => (
+                        <div key={member.id} style={{ padding: 16, background: "var(--surface)", border: "1px solid var(--hair)", borderRadius: "var(--radius)" }}>
+                          <div style={{ fontSize: 15, fontWeight: 600, color: "var(--ink)", marginBottom: 4 }}>{member.name}</div>
+                          <div style={{ fontSize: 13, color: "var(--muted)", marginBottom: 12 }}>📍 {member.location.name}</div>
+                          
+                          <div style={{ display: "flex", flexDirection: "column", gap: 6, fontSize: 13, color: "var(--ink)" }}>
+                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                              <span style={{ color: "var(--muted)" }}>Products</span>
+                              <span style={{ fontWeight: 500 }}>{member.products.map(p => p.replace("copra", "Coconut").replace(/_/g, " ")).join(", ")}</span>
+                            </div>
+                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                              <span style={{ color: "var(--muted)" }}>Monthly Volume</span>
+                              <span style={{ fontWeight: 500 }}>{member.monthlyVolumeTons} Tons</span>
+                            </div>
+                            <div style={{ display: "flex", justifyContent: "space-between", marginTop: 4, paddingTop: 10, borderTop: "1px solid var(--hair)" }}>
+                              <span style={{ color: "var(--muted)" }}>Contact</span>
+                              <span style={{ fontWeight: 500, color: "var(--brand)" }}>📞 {member.contactNumber}</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div style={{ padding: 24, textAlign: "center", color: "var(--muted)", border: "1px dashed var(--hair)", borderRadius: "var(--radius)" }}>
+                      No members registered.
+                    </div>
+                  )}
+                </div>
               </div>
             }
           />

@@ -69,6 +69,15 @@ export interface Partner {
   rating: number;
 }
 
+export interface CooperativeMember {
+  id: string;
+  name: string;
+  location: Location;
+  contactNumber: string;
+  products: ProductType[];
+  monthlyVolumeTons: number;
+}
+
 /** The registered SME using the platform (Business Continuity Profile). */
 export interface BusinessProfile {
   id: string;
@@ -78,6 +87,7 @@ export interface BusinessProfile {
   products: ProductType[];
   monthlyVolumeTons: number;
   currentPartners: Partner[];
+  members?: CooperativeMember[];
 }
 
 /** A recovery need derived from a reported disruption. */

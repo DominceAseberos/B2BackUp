@@ -333,6 +333,32 @@ export const DEMO_BUSINESS: BusinessProfile = {
     NETWORK.find((partner) => partner.id === "b-mill-digos")!,
     NETWORK.find((partner) => partner.id === "s-grower-cotabato")!,
   ],
+  members: [
+    {
+      id: "mem-001",
+      name: "San Pedro Coconut Farm",
+      location: CITY.davao,
+      contactNumber: "+63 917 123 4567",
+      products: ["whole_nut", "copra"],
+      monthlyVolumeTons: 15,
+    },
+    {
+      id: "mem-002",
+      name: "Buhangin Agri Growers",
+      location: CITY.davao,
+      contactNumber: "+63 918 234 5678",
+      products: ["copra", "husk"],
+      monthlyVolumeTons: 20,
+    },
+    {
+      id: "mem-003",
+      name: "Matina Copra Producers",
+      location: CITY.davao,
+      contactNumber: "+63 919 345 6789",
+      products: ["copra"],
+      monthlyVolumeTons: 30,
+    }
+  ]
 };
 
 /** Fair reference prices (PHP/ton) used to flag post-disaster price gouging. */
