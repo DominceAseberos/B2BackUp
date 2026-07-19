@@ -27,7 +27,7 @@ const MOCK_REQUESTS: RequestData[] = [
   },
   {
     id: "req-002",
-    buyerName: "Global Coco Exports",
+    buyerName: "Davao Coco Exports",
     context: "Standard Monthly Replenishment",
     product: "Copra",
     volumeTons: 40,
