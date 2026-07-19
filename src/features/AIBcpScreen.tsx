@@ -54,7 +54,7 @@ export function AIBcpScreen() {
                 <h3 style={{ margin: "0 0 6px", fontSize: 16 }}>Immediate Risk Assessment</h3>
                 <p style={{ margin: 0, fontSize: 14, color: "var(--ink)", lineHeight: 1.5 }}>
                   The active disaster zone heavily impacts your primary logistics route. 
-                  <strong style={{ color: "var(--alert)" }}> High risk of copra spoilage</strong> within 7 days if inventory is not moved immediately.
+                  <strong style={{ color: "var(--alert)" }}> High risk of coconut spoilage</strong> within 7 days if inventory is not moved immediately.
                 </p>
               </div>
             </div>
