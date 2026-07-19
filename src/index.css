@@ -1,20 +1,20 @@
 :root {
-  /* Anti-slop palette: warm paper, ink, palm-green brand, signal-orange for hazards */
-  --paper: #f3f1e9;
+  /* Modern App Palette to match Figma Mockup */
+  --paper: #ffffff;
   --surface: #ffffff;
-  --surface-sunk: #eceadf;
-  --ink: #17201a;
-  --muted: #6e7a70;
-  --hair: #dde0d5;
+  --surface-sunk: #f8f9fa;
+  --ink: #111827;
+  --muted: #6b7280;
+  --hair: #e5e7eb;
 
-  --brand: #1e6e4f; /* dominant: resilience / coconut palm */
-  --brand-press: #185b41;
-  --brand-tint: #e6efe8;
+  --brand: #1B7C3B; /* Vibrant mockup green */
+  --brand-press: #145c2c;
+  --brand-tint: #e8f5ec;
 
-  --alert: #c6472b; /* sharp accent: disaster / affected */
-  --alert-tint: #f7e6e0;
-  --warn: #b7842a; /* caution: limited routes / at-risk */
-  --warn-tint: #f4ecd8;
+  --alert: #dc2626; 
+  --alert-tint: #fef2f2;
+  --warn: #d97706; 
+  --warn-tint: #fffbeb;
 
   --font-display: "Outfit", sans-serif;
   --font-ui: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -38,7 +38,7 @@ body {
 }
 
 body {
-  background: #d8d4c7;
+  background: #f5f5f5;
   color: var(--ink);
   font-family: var(--font-ui);
   -webkit-font-smoothing: antialiased;
@@ -77,7 +77,7 @@ a {
   overflow: hidden;
   position: relative;
   border-radius: 30px;
-  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0 40px rgba(0,0,0,0.05), 0 0 0 1px rgba(0, 0, 0, 0.06);
 }
 
 .screen {
@@ -139,7 +139,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 18px;
+  padding: 16px 20px;
 }
 
 /* ---- Bottom tab bar ---- */

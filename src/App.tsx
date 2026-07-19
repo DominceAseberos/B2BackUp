@@ -81,6 +81,10 @@ function SmePortal() {
               />
             }
           />
+          <Route path="ai-bcp" element={<AIBcpScreen />} />
+          <Route path="requests" element={<div style={{ padding: 40, textAlign: "center" }}>My Requests (Coming Soon)</div>} />
+          <Route path="messages" element={<div style={{ padding: 40, textAlign: "center" }}>Messages (Coming Soon)</div>} />
+          <Route path="profile" element={<div style={{ padding: 40, textAlign: "center" }}>Profile</div>} />
           <Route
             path="reconnected"
             element={
@@ -144,7 +148,13 @@ function SmePortal() {
       </div>
 
       {isHome && <FloatingActionButton onClick={() => navigate("/sme/discover")} label="New Partner" icon={<Plus size={24} />} variant="primary" />}
-      <BottomNav />
+      <BottomNav tabs={[
+        { name: "Dashboard", path: "/sme", iconName: "home" },
+        { name: "Find Partners", path: "/sme/discover", iconName: "search" },
+        { name: "My Requests", path: "/sme/requests", iconName: "requests" },
+        { name: "Messages", path: "/sme/messages", iconName: "messages", badgeCount: 5 },
+        { name: "Profile", path: "/sme/profile", iconName: "user" }
+      ]} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Map, User, Package, ClipboardList } from "lucide-react";
+import { Home, Map, User, Package, ClipboardList, Search, MessageSquare, Bell } from "lucide-react";
 
 const ICON_MAP = {
   home: Home,
@@ -7,12 +7,17 @@ const ICON_MAP = {
   user: User,
   package: Package,
   receipt: ClipboardList,
+  search: Search,
+  requests: ClipboardList,
+  messages: MessageSquare,
+  bell: Bell,
 };
 
 interface Tab {
   name: string;
   path: string;
   iconName: keyof typeof ICON_MAP;
+  badgeCount?: number;
 }
 
 interface BottomNavProps {
@@ -20,33 +25,21 @@ interface BottomNavProps {
   tabs?: Tab[];
 }
 
-const SME_TABS: Tab[] = [
-  { name: "Home", path: "/sme", iconName: "home" },
-  { name: "Map", path: "/sme/map", iconName: "map" },
-  { name: "Profile", path: "/sme/profile", iconName: "user" },
-];
-
-export function BottomNav({ tabs = SME_TABS }: BottomNavProps) {
-  const location = useLocation();
+export function BottomNav({ tabs = [] }: BottomNavProps) {
+  const loc = useLocation();
 
   return (
-    <nav className="bottomnav">
-      {tabs.map((tab) => {
-        // Active if exact match OR if we're on a sub-route of a non-root tab
-        const isActive =
-          location.pathname === tab.path ||
-          (tab.path !== "/sme" && tab.path !== "/supplier" && location.pathname.startsWith(tab.path));
-
-        const Icon = ICON_MAP[tab.iconName];
-
+    <nav className="bottom-nav">
+      {tabs.map((t) => {
+        const Icon = ICON_MAP[t.iconName] || Home;
+        const active = loc.pathname === t.path;
         return (
-          <Link
-            key={tab.name}
-            to={tab.path}
-            className={`bottomnav__tab ${isActive ? "bottomnav__tab--active" : ""}`}
-          >
-            <Icon size={22} strokeWidth={isActive ? 2.5 : 1.75} />
-            <span className="bottomnav__label">{tab.name}</span>
+          <Link key={t.name} to={t.path} className={`tab ${active ? "tab--active" : ""}`}>
+            <div className="tab__icon">
+              <Icon size={24} strokeWidth={active ? 2.5 : 2} />
+              {!!t.badgeCount && <span className="tab__badge">{t.badgeCount}</span>}
+            </div>
+            <span className="tab__label" style={{ fontSize: 10 }}>{t.name}</span>
           </Link>
         );
       })}
