@@ -172,7 +172,7 @@ function SupplierHome() {
           border: "1px solid rgba(198,71,43,0.2)",
           borderRadius: "var(--radius-lg)"
         }}>
-          <h3 style={{ color: "var(--alert)", margin: "0 0 8px", fontSize: 16 }}>🚨 Business Continuity Plan Activated</h3>
+          <h3 style={{ color: "var(--alert)", margin: "0 0 8px", fontSize: 16 }}>🚨 Cooperative Continuity Plan Activated</h3>
           <p style={{ fontSize: 13, color: "var(--ink)", margin: "0 0 12px", lineHeight: 1.5 }}>
             Your supply chain is currently disrupted. Our AI agent can analyze the real-time risk to your active inventory and instantly generate a recovery strategy.
           </p>
@@ -499,7 +499,7 @@ function SupplierProfile() {
       </div>
       <div className="grid">
         <div className="stat">
-          <div className="stat__label">Business Name</div>
+          <div className="stat__label">Cooperative Name</div>
           <div className="stat__value" style={{ fontSize: 17 }}>{SUPPLIER.name}</div>
         </div>
         <div className="stat">

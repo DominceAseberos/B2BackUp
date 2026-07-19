@@ -322,9 +322,9 @@ export const NETWORK: Partner[] = [
  * (Mati) and a backup supplier (Cotabato) are knocked out by a typhoon.
  */
 export const DEMO_BUSINESS: BusinessProfile = {
-  id: "sme-dahlia",
-  name: "Dahlia Copra Trading",
-  role: "trader",
+  id: "b-tuloy-demo",
+  name: "Davao Coconut Farmers Cooperative",
+  role: "cooperative",
   location: CITY.davao,
   products: ["copra"],
   monthlyVolumeTons: 65,

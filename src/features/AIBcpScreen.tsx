@@ -29,7 +29,7 @@ export function AIBcpScreen() {
           <span className="eyebrow" style={{ display: "flex", alignItems: "center", gap: 6 }}>
             <Sparkles size={14} color="var(--brand)" /> AI Generated
           </span>
-          <h1 className="title">Business Continuity Plan</h1>
+          <h1 className="title">Cooperative Continuity Plan</h1>
         </div>
       </div>
 

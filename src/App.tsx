@@ -123,11 +123,11 @@ function SmePortal() {
               <div className="shell">
                 <div className="page-head">
                   <span className="eyebrow">Account Settings</span>
-                  <h2 className="title">Business Profile</h2>
+                  <h2 className="title">Cooperative Profile</h2>
                 </div>
                 <div className="grid">
                   <div className="stat">
-                    <div className="stat__label">Business Name</div>
+                    <div className="stat__label">Cooperative Name</div>
                     <div className="stat__value" style={{ fontSize: "18px" }}>{BUSINESS.name}</div>
                   </div>
                   <div className="stat">

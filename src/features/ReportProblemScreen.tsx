@@ -14,12 +14,12 @@ const PROBLEMS: Array<{ type: ProblemChoice; title: string; desc: string }> = [
   {
     type: "buyer_unavailable",
     title: "My buyer can't buy from me",
-    desc: "The business that buys my copra has stopped.",
+    desc: "The partner that buys my products has stopped.",
   },
   {
     type: "supplier_unavailable",
     title: "My supplier can't deliver",
-    desc: "The business that supplies me has stopped.",
+    desc: "The partner that supplies me has stopped.",
   },
 ];
 
