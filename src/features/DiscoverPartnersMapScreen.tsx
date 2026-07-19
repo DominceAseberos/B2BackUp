@@ -24,6 +24,8 @@ const createPin = (color: string) => L.divIcon({
 
 const myIcon = createPin("var(--ink)");
 const sourceIcon = createPin("var(--brand)");
+const activePartnerIcon = createPin("#2563eb");
+const disruptedPartnerIcon = createPin("var(--alert)");
 
 export function DiscoverPartnersMapScreen() {
   const navigate = useNavigate();
@@ -32,6 +34,9 @@ export function DiscoverPartnersMapScreen() {
   // Exclude current partners so we only show new potential sources
   const currentPartnerIds = new Set(DEMO_BUSINESS.currentPartners.map(p => p.id));
   const potentialSources = NETWORK.filter(p => !currentPartnerIds.has(p.id) && p.disasterStatus === "unaffected");
+
+  const activePartners = DEMO_BUSINESS.currentPartners.filter(p => p.disasterStatus === "unaffected");
+  const disruptedPartners = DEMO_BUSINESS.currentPartners.filter(p => p.disasterStatus !== "unaffected");
 
   return (
     <div className="shell" style={{ display: "flex", flexDirection: "column", height: "100%", paddingBottom: 0 }}>
@@ -42,7 +47,7 @@ export function DiscoverPartnersMapScreen() {
         <div>
           <span className="eyebrow">Discover</span>
           <h2 className="title" style={{ margin: 0 }}>Verified Partners</h2>
-          <p className="subtitle" style={{ margin: "4px 0 0" }}>Exploring all active sources across the Philippines.</p>
+          <p className="subtitle" style={{ margin: "4px 0 0" }}>Overview of your network and available sources in Mindanao.</p>
         </div>
       </div>
       
@@ -88,6 +93,60 @@ export function DiscoverPartnersMapScreen() {
                     }}
                   >
                     Send Request
+                  </button>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+          {/* Active Partners Markers */}
+          {activePartners.map(partner => (
+            <Marker 
+              key={partner.id} 
+              position={[partner.location.lat, partner.location.lng]}
+              icon={activePartnerIcon}
+            >
+              <Popup>
+                <div style={{ padding: "4px 0" }}>
+                  <div style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", color: "#2563eb", letterSpacing: "0.05em", marginBottom: 2 }}>
+                    Active Partner
+                  </div>
+                  <strong style={{ fontSize: 14, display: "block", marginBottom: 4 }}>{partner.name}</strong>
+                  <div style={{ fontSize: 12, color: "var(--muted)", marginBottom: 4 }}>
+                    {partner.location.name}
+                  </div>
+                  <div style={{ fontSize: 11, color: "var(--ink)", marginBottom: 8, textTransform: "capitalize" }}>
+                    <span style={{ fontWeight: 600, color: "var(--muted)" }}>Offers:</span> {partner.products.map(p => p.replace("_", " ")).join(", ")}
+                  </div>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+
+          {/* Disrupted Partners Markers */}
+          {disruptedPartners.map(partner => (
+            <Marker 
+              key={partner.id} 
+              position={[partner.location.lat, partner.location.lng]}
+              icon={disruptedPartnerIcon}
+            >
+              <Popup>
+                <div style={{ padding: "4px 0" }}>
+                  <div style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", color: "var(--alert)", letterSpacing: "0.05em", marginBottom: 2 }}>
+                    Disrupted Partner
+                  </div>
+                  <strong style={{ fontSize: 14, display: "block", marginBottom: 4 }}>{partner.name}</strong>
+                  <div style={{ fontSize: 12, color: "var(--muted)", marginBottom: 4 }}>
+                    {partner.location.name}
+                  </div>
+                  <div style={{ fontSize: 11, color: "var(--ink)", marginBottom: 8, textTransform: "capitalize" }}>
+                    <span style={{ fontWeight: 600, color: "var(--muted)" }}>Offers:</span> {partner.products.map(p => p.replace("_", " ")).join(", ")}
+                  </div>
+                  <button 
+                    className="btn btn--primary btn--block" 
+                    style={{ padding: "6px 12px", fontSize: 12, background: "var(--alert)" }}
+                    onClick={() => navigate("/sme/ai-bcp")}
+                  >
+                    View AI BCP
                   </button>
                 </div>
               </Popup>
