@@ -121,7 +121,7 @@ export function HomeScreen({ business, onFix }: HomeScreenProps) {
                   style={{ marginTop: 12 }}
                   onClick={() => onFix(partner)}
                 >
-                  Find a replacement →
+                  View Recommended Matches →
                 </button>
               )}
             </div>

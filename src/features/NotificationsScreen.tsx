@@ -60,7 +60,7 @@ export function NotificationsScreen({ business, onFix }: NotificationsScreenProp
                 className="btn btn--primary btn--block" 
                 onClick={() => onFix(partner)}
               >
-                Find a replacement →
+                View Recommended Matches →
               </button>
             </div>
           ))
