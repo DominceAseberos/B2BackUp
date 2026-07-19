@@ -52,8 +52,7 @@ export function NotificationsScreen({ business, onFix }: NotificationsScreenProp
                 This partner has been impacted by a natural disaster or blocked route. Tap below to find an alternative.
               </div>
               <button 
-                className="btn btn--block" 
-                style={{ background: "rgba(198,71,43,0.1)", color: "var(--alert)", fontWeight: 600 }}
+                className="btn btn--primary btn--block" 
                 onClick={() => onFix(partner)}
               >
                 Find a replacement →
