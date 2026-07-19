@@ -9,6 +9,7 @@ import { AutoMatchScreen } from "./features/AutoMatchScreen";
 import { ReconnectedScreen } from "./features/ReconnectedScreen";
 import { SupplierPortal } from "./features/SupplierPortal";
 import { NetworkMapScreen } from "./features/NetworkMapScreen";
+import { DiscoverPartnersMapScreen } from "./features/DiscoverPartnersMapScreen";
 import { NotificationsScreen } from "./features/NotificationsScreen";
 import { TopBar } from "./ui/TopBar";
 import { BottomNav } from "./ui/BottomNav";
@@ -106,6 +107,10 @@ function SmePortal() {
             element={<NetworkMapScreen />}
           />
           <Route
+            path="discover"
+            element={<DiscoverPartnersMapScreen />}
+          />
+          <Route
             path="profile"
             element={
               <div className="shell">
@@ -150,6 +155,7 @@ export function App() {
   if (location.pathname.includes("/match")) tagline = "Finding Replacements";
   if (location.pathname.includes("/reconnected")) tagline = "Recovery Complete";
   if (location.pathname.includes("/notifications")) tagline = "Alerts";
+  if (location.pathname.includes("/discover")) tagline = "Discover Partners";
 
   const notificationCount = BUSINESS.currentPartners.filter(
     (p) => p.disasterStatus === "affected" || p.routeStatus === "blocked"
