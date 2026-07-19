@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
-import { Plus } from "lucide-react";
 import { DEMO_BUSINESS } from "./domain/mockData";
 import type { MatchResult, Partner } from "./domain/types";
 
@@ -14,13 +13,11 @@ import { DiscoverPartnersMapScreen } from "./features/DiscoverPartnersMapScreen"
 import { NotificationsScreen } from "./features/NotificationsScreen";
 import { TopBar } from "./ui/TopBar";
 import { BottomNav } from "./ui/BottomNav";
-import { FloatingActionButton } from "./ui/FloatingActionButton";
 
 const BUSINESS = DEMO_BUSINESS;
 
 function SmePortal() {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [affectedPartner, setAffectedPartner] = useState<Partner | null>(null);
   const [chosen, setChosen] = useState<MatchResult | null>(null);
@@ -36,10 +33,6 @@ function SmePortal() {
     setAffectedPartner(partner);
     navigate("/sme/match");
   };
-
-
-
-  const isHome = location.pathname === "/sme" || location.pathname === "/sme/";
 
   return (
     <div className="portal-layout">
@@ -147,11 +140,10 @@ function SmePortal() {
         </Routes>
       </div>
 
-      {isHome && <FloatingActionButton onClick={() => navigate("/sme/discover")} label="New Partner" icon={<Plus size={24} />} variant="primary" />}
       <BottomNav tabs={[
         { name: "Dashboard", path: "/sme", iconName: "home" },
-        { name: "Find Partners", path: "/sme/discover", iconName: "search" },
-        { name: "My Requests", path: "/sme/requests", iconName: "requests" },
+        { name: "Partners", path: "/sme/discover", iconName: "search" },
+        { name: "Requests", path: "/sme/requests", iconName: "requests" },
         { name: "Messages", path: "/sme/messages", iconName: "messages", badgeCount: 5 },
         { name: "Profile", path: "/sme/profile", iconName: "user" }
       ]} />

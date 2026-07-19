@@ -10,7 +10,7 @@ function isDisrupted(partner: Partner): boolean {
   return partner.disasterStatus === "affected" || partner.routeStatus === "blocked";
 }
 
-import { Menu, Bell } from "lucide-react";
+import { Bell } from "lucide-react";
 
 export function HomeScreen({ business }: HomeScreenProps) {
   const navigate = useNavigate();
@@ -19,16 +19,6 @@ export function HomeScreen({ business }: HomeScreenProps) {
 
   return (
     <div className="shell">
-      {/* Top Header */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px 20px 0" }}>
-        <Menu size={24} style={{ cursor: "pointer" }} />
-        <h2 style={{ margin: 0, fontSize: 18, fontWeight: 600 }}>Dashboard</h2>
-        <div style={{ position: "relative", cursor: "pointer" }}>
-          <Bell size={24} />
-          {disrupted.length > 0 && <div style={{ position: "absolute", top: 0, right: 0, width: 10, height: 10, background: "var(--alert)", borderRadius: "50%", border: "2px solid var(--surface)" }} />}
-        </div>
-      </div>
-
       {/* Disaster Alert Box (Mockup style) */}
       {disrupted.length > 0 && (
         <div style={{
