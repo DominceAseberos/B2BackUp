@@ -42,12 +42,12 @@ export function DiscoverPartnersMapScreen() {
         <div>
           <span className="eyebrow">Discover</span>
           <h2 className="title" style={{ margin: 0 }}>Verified Partners</h2>
-          <p className="subtitle" style={{ margin: "4px 0 0" }}>Exploring all active sources across Mindanao.</p>
+          <p className="subtitle" style={{ margin: "4px 0 0" }}>Exploring all active sources across the Philippines.</p>
         </div>
       </div>
       
       <div style={{ flex: 1, minHeight: 0, borderRadius: "var(--radius) var(--radius) 0 0", overflow: "hidden", border: "1px solid var(--hair)", borderBottom: "none" }}>
-        <MapContainer center={origin} zoom={6} style={{ height: "100%", width: "100%", zIndex: 0 }}>
+        <MapContainer center={origin} zoom={5} style={{ height: "100%", width: "100%", zIndex: 0 }}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"

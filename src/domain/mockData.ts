@@ -14,6 +14,10 @@ const CITY: Record<string, Location> = {
   malaybalay: { name: "Malaybalay, Bukidnon", lat: 8.15, lng: 125.13 },
   kidapawan: { name: "Kidapawan, Cotabato", lat: 7.01, lng: 125.09 },
   zambo: { name: "Zamboanga City", lat: 6.92, lng: 122.08 },
+  manila: { name: "Metro Manila", lat: 14.60, lng: 120.98 },
+  cebu: { name: "Cebu City", lat: 10.29, lng: 123.90 },
+  iloilo: { name: "Iloilo City", lat: 10.58, lng: 122.15 },
+  legazpi: { name: "Legazpi City", lat: 13.14, lng: 123.73 },
 };
 
 /** The full Tuloy network of buyers and suppliers (demo dataset). */
@@ -164,6 +168,45 @@ export const NETWORK: Partner[] = [
     verified: true,
     rating: 4.3,
   },
+  {
+    id: "b-luzon-manila",
+    name: "Luzon Premier Oils",
+    role: "buyer",
+    location: CITY.manila,
+    products: ["coconut_oil"],
+    capacityTons: 500,
+    disasterStatus: "unaffected",
+    routeStatus: "open",
+    pricePhpPerTon: 42500,
+    verified: true,
+    rating: 4.8,
+  },
+  {
+    id: "b-visayas-cebu",
+    name: "Visayas Copra Traders",
+    role: "buyer",
+    location: CITY.cebu,
+    products: ["copra", "whole_nuts"],
+    capacityTons: 150,
+    disasterStatus: "unaffected",
+    routeStatus: "open",
+    pricePhpPerTon: 41000,
+    verified: true,
+    rating: 4.5,
+  },
+  {
+    id: "s-visayas-iloilo",
+    name: "Panay Agri-Coop",
+    role: "supplier",
+    location: CITY.iloilo,
+    products: ["copra"],
+    capacityTons: 80,
+    disasterStatus: "unaffected",
+    routeStatus: "open",
+    pricePhpPerTon: 40500,
+    verified: true,
+    rating: 4.4,
+  }
 ];
 
 /**
