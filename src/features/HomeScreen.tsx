@@ -64,6 +64,29 @@ export function HomeScreen({ business, onFix }: HomeScreenProps) {
         </div>
       </div>
 
+      {/* Global BCP Alert */}
+      {partners.some(isDisrupted) && (
+        <div style={{
+          margin: "16px 20px 0",
+          padding: 16,
+          background: "rgba(198,71,43,0.06)",
+          border: "1px solid rgba(198,71,43,0.2)",
+          borderRadius: "var(--radius-lg)"
+        }}>
+          <h3 style={{ color: "var(--alert)", margin: "0 0 8px", fontSize: 16 }}>🚨 Supply Chain Disrupted</h3>
+          <p style={{ fontSize: 13, color: "var(--ink)", margin: "0 0 12px", lineHeight: 1.5 }}>
+            Multiple partners are offline. Generate a comprehensive AI business continuity plan to assess total risk and coordinate logistics.
+          </p>
+          <button 
+            className="btn btn--primary btn--block" 
+            style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}
+            onClick={() => navigate("/sme/ai-bcp")}
+          >
+            <span style={{ fontSize: 14 }}>✨</span> Generate AI Continuity Plan
+          </button>
+        </div>
+      )}
+
       {/* Partner list */}
       <div className="section">
         <div className="section__label">
@@ -117,23 +140,14 @@ export function HomeScreen({ business, onFix }: HomeScreenProps) {
 
               {/* Find replacement — full width button */}
               {down && (
-                <div style={{ marginTop: 12 }}>
-                  <button
-                    type="button"
-                    className="btn btn--primary btn--block"
-                    onClick={() => onFix(partner)}
-                  >
-                    View Recommended Matches →
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn--ghost btn--block"
-                    style={{ marginTop: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}
-                    onClick={() => navigate("/sme/ai-bcp")}
-                  >
-                    <span style={{ fontSize: 14 }}>✨</span> Generate AI Continuity Plan
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  className="btn btn--primary btn--block"
+                  style={{ marginTop: 12 }}
+                  onClick={() => onFix(partner)}
+                >
+                  View Recommended Matches →
+                </button>
               )}
             </div>
           );
