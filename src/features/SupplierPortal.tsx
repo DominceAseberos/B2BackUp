@@ -2,7 +2,8 @@ import { DEMO_SUPPLIER } from "../domain/mockData";
 import type { StockItem } from "../domain/types";
 import { PinIcon } from "../ui/icons";
 import { BottomNav } from "../ui/BottomNav";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { AIBcpScreen } from "./AIBcpScreen";
 
 const SUPPLIER = DEMO_SUPPLIER;
 
@@ -137,6 +138,7 @@ function StockCard({ item, index }: { item: StockItem; index: number }) {
 
 function SupplierHome() {
   const location = useLocation();
+  const navigate = useNavigate();
   const disasterActive = location.search.includes("disaster=1");
   const isOperating = !disasterActive;
   const totalTons = SUPPLIER.stock.reduce((s, i) => s + i.availableTons, 0);
@@ -171,11 +173,16 @@ function SupplierHome() {
           borderRadius: "var(--radius-lg)"
         }}>
           <h3 style={{ color: "var(--alert)", margin: "0 0 8px", fontSize: 16 }}>🚨 Business Continuity Plan Activated</h3>
-          <p style={{ fontSize: 13, color: "var(--ink)", margin: 0, lineHeight: 1.5 }}>
-            <strong>1. Inventory Reroute:</strong> Your active stock is being automatically matched with backup buyers outside the affected zone.<br/>
-            <strong>2. Evacuation:</strong> Please secure remaining warehouse assets immediately.<br/>
-            <strong>3. Logistics:</strong> Priority routing requests have been dispatched to our logistics partners.
+          <p style={{ fontSize: 13, color: "var(--ink)", margin: "0 0 12px", lineHeight: 1.5 }}>
+            Your supply chain is currently disrupted. Our AI agent can analyze the real-time risk to your active inventory and instantly generate a recovery strategy.
           </p>
+          <button 
+            className="btn btn--primary btn--block" 
+            style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, background: "var(--brand)" }}
+            onClick={() => navigate("/supplier/ai-bcp")}
+          >
+            <span style={{ fontSize: 14 }}>✨</span> Generate AI Continuity Plan
+          </button>
         </div>
       )}
 
@@ -521,6 +528,7 @@ export function SupplierPortal() {
           <Route index element={<SupplierHome />} />
           <Route path="orders" element={<SupplierOrders />} />
           <Route path="profile" element={<SupplierProfile />} />
+          <Route path="ai-bcp" element={<AIBcpScreen />} />
           <Route path="*" element={<Navigate to="/supplier" replace />} />
         </Routes>
       </div>
