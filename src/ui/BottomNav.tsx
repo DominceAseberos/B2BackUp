@@ -29,17 +29,32 @@ export function BottomNav({ tabs = [] }: BottomNavProps) {
   const loc = useLocation();
 
   return (
-    <nav className="bottom-nav">
+    <nav className="bottomnav">
       {tabs.map((t) => {
         const Icon = ICON_MAP[t.iconName] || Home;
         const active = loc.pathname === t.path;
         return (
-          <Link key={t.name} to={t.path} className={`tab ${active ? "tab--active" : ""}`}>
-            <div className="tab__icon">
-              <Icon size={24} strokeWidth={active ? 2.5 : 2} />
-              {!!t.badgeCount && <span className="tab__badge">{t.badgeCount}</span>}
+          <Link key={t.name} to={t.path} className={`bottomnav__tab ${active ? "bottomnav__tab--active" : ""}`}>
+            <div style={{ position: "relative", display: "inline-block" }}>
+              <Icon size={22} strokeWidth={active ? 2.5 : 1.75} />
+              {!!t.badgeCount && (
+                <span style={{
+                  position: "absolute",
+                  top: -4,
+                  right: -8,
+                  background: "var(--alert)",
+                  color: "white",
+                  fontSize: 10,
+                  fontWeight: "bold",
+                  padding: "2px 6px",
+                  borderRadius: 10,
+                  lineHeight: 1
+                }}>
+                  {t.badgeCount}
+                </span>
+              )}
             </div>
-            <span className="tab__label" style={{ fontSize: 10 }}>{t.name}</span>
+            <span className="bottomnav__label">{t.name}</span>
           </Link>
         );
       })}
