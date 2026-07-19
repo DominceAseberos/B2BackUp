@@ -38,19 +38,22 @@ export function NotificationsScreen({ business, onFix }: NotificationsScreenProp
         ) : (
           disrupted.map(partner => (
             <div key={partner.id} style={{ 
-              background: "var(--surface)", 
-              padding: 16, 
-              borderRadius: "var(--radius)", 
-              border: "1px solid var(--hair)",
-              marginBottom: 12,
-              borderLeft: "4px solid var(--alert)"
+              background: "#ffffff", 
+              padding: 20, 
+              borderRadius: 16, 
+              boxShadow: "0 10px 40px -10px rgba(0,0,0,0.06)",
+              marginBottom: 16,
+              transition: "transform 200ms ease, box-shadow 200ms ease"
             }}>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-                <span style={{ fontSize: 12, fontWeight: 700, color: "var(--alert)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Action Required</span>
-                <span style={{ fontSize: 11, color: "var(--muted)" }}>Just now</span>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+                <span style={{ fontSize: 11, fontWeight: 700, color: "var(--alert)", textTransform: "uppercase", letterSpacing: "0.06em", display: "flex", alignItems: "center", gap: 6 }}>
+                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--alert)" }}></span>
+                  Action Required
+                </span>
+                <span style={{ fontSize: 12, color: "var(--muted)", fontWeight: 500 }}>Just now</span>
               </div>
-              <div style={{ fontWeight: 600, fontSize: 15, marginBottom: 4 }}>{partner.name} is offline</div>
-              <div style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.4, marginBottom: 12 }}>
+              <div style={{ fontWeight: 600, fontSize: 16, marginBottom: 6, color: "var(--ink)" }}>{partner.name} is offline</div>
+              <div style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.5, marginBottom: 16 }}>
                 This partner has been impacted by a natural disaster or blocked route. Tap below to find an alternative.
               </div>
               <button 
