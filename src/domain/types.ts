@@ -57,6 +57,8 @@ export interface Partner {
   role: PartnerRole;
   location: Location;
   products: ProductType[];
+  /** The final products this partner creates (e.g. coconut oil) */
+  produces?: string[];
   /** Monthly buying (buyer) or supply (supplier) capacity, in tonnes. */
   capacityTons: number;
   disasterStatus: DisasterStatus;

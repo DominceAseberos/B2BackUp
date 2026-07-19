@@ -101,6 +101,11 @@ function MatchCard({ result, rank, onSelect }: { result: MatchResult; rank: numb
             <div style={{ fontSize: 12.5, color: "var(--ink)", marginTop: 4, fontWeight: 500 }}>
               {partner.role === "buyer" ? "🛒 Buying: " : "📦 Supplying: "}
               {partner.products.map(p => p.replace("copra", "Coconut").replace(/_/g, " ")).join(", ")}
+              {partner.produces && (
+                <span style={{ marginLeft: 6, color: "var(--muted)", fontWeight: 400 }}>
+                  | 🏭 Produces: {partner.produces.join(", ")}
+                </span>
+              )}
             </div>
           </div>
           {/* Score ring */}
