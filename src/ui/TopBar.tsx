@@ -1,4 +1,3 @@
-import { LinkMarkIcon } from "./icons";
 import { Link } from "react-router-dom";
 import { Bell } from "lucide-react";
 
@@ -12,11 +11,9 @@ export function TopBar({ tagline = "Supply chain recovery", notificationCount = 
   return (
     <div className="topbar" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
       <div className="topbar__inner" style={{ flex: 1 }}>
-        <Link to="/sme" className="brand" style={{ textDecoration: "none", color: "inherit" }}>
-          <span className="brand__mark" aria-hidden="true">
-            <LinkMarkIcon size={16} />
-          </span>
-          B2BackUp
+        <Link to="/sme" className="brand" style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center", gap: 8 }}>
+          <img src="/logo.png" alt="B2BackUp Logo" style={{ height: 24, width: "auto" }} />
+          <span style={{ fontWeight: 800 }}>B2BackUp</span>
         </Link>
         <span className="topbar__tagline">{tagline}</span>
       </div>
