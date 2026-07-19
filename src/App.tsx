@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { Plus } from "lucide-react";
 import { DEMO_BUSINESS } from "./domain/mockData";
 import type { MatchResult, Partner } from "./domain/types";
@@ -149,21 +149,13 @@ function SmePortal() {
 }
 
 export function App() {
-  const location = useLocation();
-
-  let tagline = "Supply chain recovery";
-  if (location.pathname.includes("/match")) tagline = "Finding Replacements";
-  if (location.pathname.includes("/reconnected")) tagline = "Recovery Complete";
-  if (location.pathname.includes("/notifications")) tagline = "Alerts";
-  if (location.pathname.includes("/discover")) tagline = "Discover Partners";
-
   const notificationCount = BUSINESS.currentPartners.filter(
     (p) => p.disasterStatus === "affected" || p.routeStatus === "blocked"
   ).length;
 
   return (
     <div className="app">
-      <TopBar tagline={tagline} notificationCount={notificationCount} />
+      <TopBar notificationCount={notificationCount} />
       <div className="screen-container">
         <Routes>
           <Route path="/sme/*" element={<SmePortal />} />
