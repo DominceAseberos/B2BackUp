@@ -32,7 +32,7 @@ export function ProfileScreen({ business }: { business: BusinessProfile }) {
         <h2 className="title">Cooperative Profile</h2>
       </div>
       
-      <div style={{ flex: 1, overflowY: "auto", padding: "0 20px 24px" }}>
+      <div className="screen-content" style={{ padding: "0 20px 24px" }}>
         <div className="grid" style={{ marginBottom: 24 }}>
           <div className="stat">
             <div className="stat__label">Cooperative Name</div>

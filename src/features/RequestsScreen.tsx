@@ -64,7 +64,7 @@ export function RequestsScreen() {
         <h2 className="title">Inbound Requests</h2>
       </div>
 
-      <div style={{ flex: 1, overflowY: "auto", padding: "0 20px 24px" }}>
+      <div className="screen-content" style={{ padding: "0 20px 24px" }}>
         
         {/* Pending Requests Section */}
         <div style={{ marginBottom: 32 }}>
