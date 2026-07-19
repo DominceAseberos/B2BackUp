@@ -74,8 +74,11 @@ export function DiscoverPartnersMapScreen() {
                     {ROLE_LABEL[partner.role]}
                   </div>
                   <strong style={{ fontSize: 14, display: "block", marginBottom: 4 }}>{partner.name}</strong>
-                  <div style={{ fontSize: 12, color: "var(--muted)", marginBottom: 8 }}>
+                  <div style={{ fontSize: 12, color: "var(--muted)", marginBottom: 4 }}>
                     {partner.location.name}
+                  </div>
+                  <div style={{ fontSize: 11, color: "var(--ink)", marginBottom: 8, textTransform: "capitalize" }}>
+                    <span style={{ fontWeight: 600, color: "var(--muted)" }}>Offers:</span> {partner.products.map(p => p.replace("_", " ")).join(", ")}
                   </div>
                   <button 
                     className="btn btn--primary btn--block" 
