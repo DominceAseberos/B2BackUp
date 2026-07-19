@@ -9,6 +9,7 @@ import { AutoMatchScreen } from "./features/AutoMatchScreen";
 import { ReconnectedScreen } from "./features/ReconnectedScreen";
 import { SupplierPortal } from "./features/SupplierPortal";
 import { NetworkMapScreen } from "./features/NetworkMapScreen";
+import { NotificationsScreen } from "./features/NotificationsScreen";
 import { TopBar } from "./ui/TopBar";
 import { BottomNav } from "./ui/BottomNav";
 import { FloatingActionButton } from "./ui/FloatingActionButton";
@@ -67,6 +68,15 @@ function SmePortal() {
               ) : (
                 <Navigate to="/sme" replace />
               )
+            }
+          />
+          <Route
+            path="notifications"
+            element={
+              <NotificationsScreen
+                business={BUSINESS}
+                onFix={handleFix}
+              />
             }
           />
           <Route
@@ -139,12 +149,15 @@ export function App() {
   let tagline = "Supply chain recovery";
   if (location.pathname.includes("/match")) tagline = "Finding Replacements";
   if (location.pathname.includes("/reconnected")) tagline = "Recovery Complete";
-  if (location.pathname.includes("/lgu")) tagline = "LGU Monitoring";
-  if (location.pathname.includes("/logistics")) tagline = "Logistics Tracking";
+  if (location.pathname.includes("/notifications")) tagline = "Alerts";
+
+  const notificationCount = BUSINESS.currentPartners.filter(
+    (p) => p.disasterStatus === "affected" || p.routeStatus === "blocked"
+  ).length;
 
   return (
     <div className="app">
-      <TopBar tagline={tagline} />
+      <TopBar tagline={tagline} notificationCount={notificationCount} />
       <div className="screen-container">
         <Routes>
           <Route path="/sme/*" element={<SmePortal />} />

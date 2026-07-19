@@ -52,9 +52,6 @@ function activeStatusBadge(partner: Partner): { label: string; cls: string } | n
 /** Plain home screen: your business, your partners, and one clear action. */
 export function HomeScreen({ business, onFix }: HomeScreenProps) {
   const partners = business.currentPartners;
-  const disrupted = partners.filter(isDisrupted);
-  const allWell = disrupted.length === 0;
-
   return (
     <div className="shell">
       {/* Hero card */}
@@ -63,14 +60,6 @@ export function HomeScreen({ business, onFix }: HomeScreenProps) {
         <div className="home-hero__loc">
           <PinIcon size={13} /> {business.location.name} · Copra trader
         </div>
-        <span className={`status-pill ${allWell ? "status-pill--ok" : "status-pill--alert"}`}>
-          {allWell ? "✓ Operating normally" : `${disrupted.length} partner${disrupted.length > 1 ? "s" : ""} need attention`}
-        </span>
-        <p className="explainer">
-          {allWell
-            ? "All your buyers and suppliers are active. If a storm cuts one off, tap the Report button — we'll find a replacement instantly."
-            : `${disrupted.length === 1 ? "One of your partners has" : "Some of your partners have"} stopped trading. Tap "Find a replacement" below to auto-match a new one.`}
-        </p>
       </div>
 
       {/* Partner list */}
