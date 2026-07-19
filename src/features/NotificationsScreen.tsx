@@ -56,12 +56,22 @@ export function NotificationsScreen({ business, onFix }: NotificationsScreenProp
               <div style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.5, marginBottom: 16 }}>
                 This partner has been impacted by a natural disaster or blocked route. Tap below to find an alternative.
               </div>
-              <button 
-                className="btn btn--primary btn--block" 
-                onClick={() => onFix(partner)}
-              >
-                View Recommended Matches →
-              </button>
+              <div style={{ marginTop: 12 }}>
+                <button 
+                  className="btn btn--primary btn--block" 
+                  onClick={() => onFix(partner)}
+                >
+                  View Recommended Matches →
+                </button>
+                <button
+                  type="button"
+                  className="btn btn--ghost btn--block"
+                  style={{ marginTop: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}
+                  onClick={() => navigate("/sme/ai-bcp")}
+                >
+                  <span style={{ fontSize: 14 }}>✨</span> Generate AI Continuity Plan
+                </button>
+              </div>
             </div>
           ))
         )}

@@ -1,6 +1,7 @@
 import type { BusinessProfile, Partner } from "../domain/types";
 import { PinIcon } from "../ui/icons";
 import { ROLE_LABEL } from "../ui/labels";
+import { useNavigate } from "react-router-dom";
 
 interface HomeScreenProps {
   business: BusinessProfile;
@@ -51,6 +52,7 @@ function activeStatusBadge(partner: Partner): { label: string; cls: string } | n
 
 /** Plain home screen: your business, your partners, and one clear action. */
 export function HomeScreen({ business, onFix }: HomeScreenProps) {
+  const navigate = useNavigate();
   const partners = business.currentPartners;
   return (
     <div className="shell">
@@ -115,14 +117,23 @@ export function HomeScreen({ business, onFix }: HomeScreenProps) {
 
               {/* Find replacement — full width button */}
               {down && (
-                <button
-                  type="button"
-                  className="btn btn--primary btn--block"
-                  style={{ marginTop: 12 }}
-                  onClick={() => onFix(partner)}
-                >
-                  View Recommended Matches →
-                </button>
+                <div style={{ marginTop: 12 }}>
+                  <button
+                    type="button"
+                    className="btn btn--primary btn--block"
+                    onClick={() => onFix(partner)}
+                  >
+                    View Recommended Matches →
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn--ghost btn--block"
+                    style={{ marginTop: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}
+                    onClick={() => navigate("/sme/ai-bcp")}
+                  >
+                    <span style={{ fontSize: 14 }}>✨</span> Generate AI Continuity Plan
+                  </button>
+                </div>
               )}
             </div>
           );

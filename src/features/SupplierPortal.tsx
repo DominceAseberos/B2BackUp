@@ -178,7 +178,7 @@ function SupplierHome() {
           </p>
           <button 
             className="btn btn--primary btn--block" 
-            style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, background: "var(--brand)" }}
+            style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}
             onClick={() => navigate("/supplier/ai-bcp")}
           >
             <span style={{ fontSize: 14 }}>✨</span> Generate AI Continuity Plan

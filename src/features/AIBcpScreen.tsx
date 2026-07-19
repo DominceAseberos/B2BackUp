@@ -22,7 +22,7 @@ export function AIBcpScreen() {
   return (
     <div className="shell" style={{ paddingBottom: 100, background: "var(--surface)", minHeight: "100vh" }}>
       <div className="page-head" style={{ borderBottom: "1px solid var(--hair)", paddingBottom: 16 }}>
-        <button className="back-btn" onClick={() => navigate(-1)} aria-label="Go back">
+        <button className="progress__back" onClick={() => navigate(-1)} aria-label="Go back">
           <ChevronLeft size={24} />
         </button>
         <div>

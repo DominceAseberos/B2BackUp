@@ -8,6 +8,7 @@ import { HomeScreen } from "./features/HomeScreen";
 import { AutoMatchScreen } from "./features/AutoMatchScreen";
 import { ReconnectedScreen } from "./features/ReconnectedScreen";
 import { SupplierPortal } from "./features/SupplierPortal";
+import { AIBcpScreen } from "./features/AIBcpScreen";
 import { NetworkMapScreen } from "./features/NetworkMapScreen";
 import { DiscoverPartnersMapScreen } from "./features/DiscoverPartnersMapScreen";
 import { NotificationsScreen } from "./features/NotificationsScreen";
