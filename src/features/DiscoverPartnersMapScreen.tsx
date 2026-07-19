@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
+import type { Partner } from "../domain/types";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { DEMO_BUSINESS, NETWORK } from "../domain/mockData";
@@ -27,7 +28,7 @@ const sourceIcon = createPin("var(--brand)");
 const activePartnerIcon = createPin("#2563eb");
 const disruptedPartnerIcon = createPin("var(--alert)");
 
-export function DiscoverPartnersMapScreen() {
+export function DiscoverPartnersMapScreen({ onFix }: { onFix?: (partner: Partner) => void }) {
   const navigate = useNavigate();
   const origin = [DEMO_BUSINESS.location.lat, DEMO_BUSINESS.location.lng] as [number, number];
 
@@ -138,15 +139,20 @@ export function DiscoverPartnersMapScreen() {
                   <div style={{ fontSize: 12, color: "var(--muted)", marginBottom: 4 }}>
                     {partner.location.name}
                   </div>
-                  <div style={{ fontSize: 11, color: "var(--ink)", marginBottom: 8, textTransform: "capitalize" }}>
-                    <span style={{ fontWeight: 600, color: "var(--muted)" }}>Offers:</span> {partner.products.map(p => p.replace("_", " ")).join(", ")}
+                  <div style={{ fontSize: 11, color: "var(--ink)", marginBottom: 8, lineHeight: 1.4 }}>
+                    <span style={{ fontWeight: 600, color: "var(--muted)" }}>Status:</span> <span style={{ color: "var(--alert)" }}>{partner.disasterStatus === "affected" ? "Affected by Disaster" : "At Risk of Disruption"}</span>
+                    <br/>
+                    <span style={{ fontWeight: 600, color: "var(--muted)" }}>Route:</span> <span style={{ color: "var(--alert)" }}>{partner.routeStatus === "blocked" ? "Route Blocked" : "Limited Access"}</span>
                   </div>
                   <button 
                     className="btn btn--primary btn--block" 
                     style={{ padding: "6px 12px", fontSize: 12, background: "var(--alert)" }}
-                    onClick={() => navigate("/sme/ai-bcp")}
+                    onClick={() => {
+                      if (onFix) onFix(partner);
+                      else navigate("/sme/match");
+                    }}
                   >
-                    View AI BCP
+                    Find Alternatives
                   </button>
                 </div>
               </Popup>

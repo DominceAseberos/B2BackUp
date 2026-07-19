@@ -108,7 +108,7 @@ function SmePortal() {
           />
           <Route
             path="discover"
-            element={<DiscoverPartnersMapScreen />}
+            element={<DiscoverPartnersMapScreen onFix={handleFix} />}
           />
           <Route
             path="profile"
