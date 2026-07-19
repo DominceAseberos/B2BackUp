@@ -12,10 +12,11 @@ import { NetworkMapScreen } from "./features/NetworkMapScreen";
 import { DiscoverPartnersMapScreen } from "./features/DiscoverPartnersMapScreen";
 import { NotificationsScreen } from "./features/NotificationsScreen";
 import { ProfileScreen } from "./features/ProfileScreen";
+import { RequestsScreen } from "./features/RequestsScreen";
 import { TopBar } from "./ui/TopBar";
 import { BottomNav } from "./ui/BottomNav";
 import { PlaceholderScreen } from "./ui/PlaceholderScreen";
-import { ClipboardList, MessageSquare } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 
 const BUSINESS = DEMO_BUSINESS;
 
@@ -85,7 +86,7 @@ function SmePortal() {
             }
           />
           <Route path="ai-bcp" element={<AIBcpScreen />} />
-          <Route path="requests" element={<PlaceholderScreen title="My Requests" icon={<ClipboardList size={48} />} description="Track your pending and active match requests here." />} />
+          <Route path="requests" element={<RequestsScreen />} />
           <Route path="messages" element={<PlaceholderScreen title="Messages" icon={<MessageSquare size={48} />} description="Chat directly with matched partners." />} />
 
           <Route
