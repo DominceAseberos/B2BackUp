@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { DEMO_BUSINESS, NETWORK } from "../domain/mockData";
@@ -151,6 +151,29 @@ export function DiscoverPartnersMapScreen() {
                 </div>
               </Popup>
             </Marker>
+          ))}
+
+          {/* Lines to Active Partners */}
+          {activePartners.map(partner => (
+            <Polyline
+              key={`line-${partner.id}`}
+              positions={[origin, [partner.location.lat, partner.location.lng]]}
+              color="#2563eb"
+              weight={2}
+              opacity={0.6}
+            />
+          ))}
+
+          {/* Lines to Disrupted Partners */}
+          {disruptedPartners.map(partner => (
+            <Polyline
+              key={`line-${partner.id}`}
+              positions={[origin, [partner.location.lat, partner.location.lng]]}
+              color="var(--alert)"
+              weight={2}
+              dashArray="5, 8"
+              opacity={0.8}
+            />
           ))}
         </MapContainer>
       </div>
