@@ -39,6 +39,7 @@ export function DiscoverPartnersMapScreen({ onFix }: { onFix?: (partner: Partner
 
   const [typeFilter, setTypeFilter] = useState<"all" | "cooperatives" | "processors">("all");
   const [productFilter, setProductFilter] = useState<"all" | "copra" | "whole_nut">("all");
+  const [requestedIds, setRequestedIds] = useState<Set<string>>(new Set());
 
   const displayedSources = potentialSources.filter(p => {
     if (typeFilter === "cooperatives" && p.role !== "supplier") return false;
@@ -134,12 +135,19 @@ export function DiscoverPartnersMapScreen({ onFix }: { onFix?: (partner: Partner
                   </div>
                   <button 
                     className="btn btn--primary btn--block" 
-                    style={{ padding: "6px 12px", fontSize: 12 }}
-                    onClick={() => {
-                      alert(`Connection request sent to ${partner.name}!`);
+                    style={{ 
+                      padding: "6px 12px", 
+                      fontSize: 12,
+                      background: requestedIds.has(partner.id) ? "var(--surface)" : "var(--brand)",
+                      color: requestedIds.has(partner.id) ? "var(--brand)" : "white",
+                      border: requestedIds.has(partner.id) ? "1px solid var(--brand)" : "none"
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setRequestedIds(prev => new Set(prev).add(partner.id));
                     }}
                   >
-                    Send Request
+                    {requestedIds.has(partner.id) ? "✓ Requested" : "Send Request"}
                   </button>
                 </div>
               </Popup>
