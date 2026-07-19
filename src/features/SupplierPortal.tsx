@@ -2,7 +2,7 @@ import { DEMO_SUPPLIER } from "../domain/mockData";
 import type { StockItem } from "../domain/types";
 import { PinIcon } from "../ui/icons";
 import { BottomNav } from "../ui/BottomNav";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 const SUPPLIER = DEMO_SUPPLIER;
 
@@ -136,7 +136,9 @@ function StockCard({ item, index }: { item: StockItem; index: number }) {
 }
 
 function SupplierHome() {
-  const isOperating = SUPPLIER.disasterStatus === "unaffected";
+  const location = useLocation();
+  const disasterActive = location.search.includes("disaster=1");
+  const isOperating = !disasterActive;
   const totalTons = SUPPLIER.stock.reduce((s, i) => s + i.availableTons, 0);
 
   return (
@@ -159,6 +161,23 @@ function SupplierHome() {
           listed below.
         </p>
       </div>
+
+      {disasterActive && (
+        <div style={{
+          marginTop: 18,
+          padding: 16,
+          background: "rgba(198,71,43,0.06)",
+          border: "1px solid rgba(198,71,43,0.2)",
+          borderRadius: "var(--radius-lg)"
+        }}>
+          <h3 style={{ color: "var(--alert)", margin: "0 0 8px", fontSize: 16 }}>🚨 Business Continuity Plan Activated</h3>
+          <p style={{ fontSize: 13, color: "var(--ink)", margin: 0, lineHeight: 1.5 }}>
+            <strong>1. Inventory Reroute:</strong> Your active stock is being automatically matched with backup buyers outside the affected zone.<br/>
+            <strong>2. Evacuation:</strong> Please secure remaining warehouse assets immediately.<br/>
+            <strong>3. Logistics:</strong> Priority routing requests have been dispatched to our logistics partners.
+          </p>
+        </div>
+      )}
 
       {/* Quick stats */}
       <div className="grid grid--stats" style={{ marginTop: 18 }}>
