@@ -59,6 +59,13 @@ function SmePortal() {
                   onBack={goHome}
                   onSelect={(result) => {
                     setChosen(result);
+                    // Automatically partner with the chosen partner by replacing the affected one in mock data
+                    if (affectedPartner) {
+                      const idx = BUSINESS.currentPartners.findIndex(p => p.id === affectedPartner.id);
+                      if (idx !== -1) {
+                        BUSINESS.currentPartners.splice(idx, 1, result.partner);
+                      }
+                    }
                     navigate("/sme/reconnected");
                   }}
                 />

@@ -68,7 +68,7 @@ function MatchCard({ result, rank, onSelect }: { result: MatchResult; rank: numb
   const rankLabel = RANK_LABELS[rank] ?? `#${rank + 1}`;
 
   return (
-    <div style={{
+    <div className="match-card" style={{
       background: "var(--surface)",
       border: `1.5px solid ${rank === 0 ? "var(--brand)" : "var(--hair)"}`,
       borderRadius: "var(--radius-lg)",
@@ -132,13 +132,25 @@ function MatchCard({ result, rank, onSelect }: { result: MatchResult; rank: numb
       </div>
 
       {/* Action */}
-      <div style={{ padding: "12px 18px 16px" }}>
+      <div style={{ padding: "12px 18px 16px", display: "flex", gap: 8 }}>
         <button
           type="button"
-          className={`btn btn--block ${rank === 0 ? "btn--primary" : "btn--ghost"}`}
+          className="btn btn--ghost"
+          style={{ flex: 1, padding: "8px 0", color: "var(--muted)" }}
+          onClick={(e) => {
+            const el = e.currentTarget.closest(".match-card");
+            if (el) (el as HTMLElement).style.display = "none";
+          }}
+        >
+          ✗ Reject
+        </button>
+        <button
+          type="button"
+          className={`btn ${rank === 0 ? "btn--primary" : "btn--outline"}`}
+          style={{ flex: 2, padding: "8px 0" }}
           onClick={() => onSelect(result)}
         >
-          {rank === 0 ? "✓ Accept Match" : "Accept Match →"}
+          {rank === 0 ? "✓ Accept Match" : "✓ Accept Match"}
         </button>
       </div>
     </div>
