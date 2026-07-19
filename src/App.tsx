@@ -142,7 +142,7 @@ function SmePortal() {
         </Routes>
       </div>
 
-      {isHome && <FloatingActionButton onClick={() => {}} label="New Partner" icon={<Plus size={24} />} variant="primary" />}
+      {isHome && <FloatingActionButton onClick={() => navigate("/sme/discover")} label="New Partner" icon={<Plus size={24} />} variant="primary" />}
       <BottomNav />
     </div>
   );
