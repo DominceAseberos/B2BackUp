@@ -15,7 +15,7 @@ import { ProfileScreen } from "./features/ProfileScreen";
 import { TopBar } from "./ui/TopBar";
 import { BottomNav } from "./ui/BottomNav";
 import { PlaceholderScreen } from "./ui/PlaceholderScreen";
-import { ClipboardList, MessageSquare, User } from "lucide-react";
+import { ClipboardList, MessageSquare } from "lucide-react";
 
 const BUSINESS = DEMO_BUSINESS;
 
@@ -87,7 +87,7 @@ function SmePortal() {
           <Route path="ai-bcp" element={<AIBcpScreen />} />
           <Route path="requests" element={<PlaceholderScreen title="My Requests" icon={<ClipboardList size={48} />} description="Track your pending and active match requests here." />} />
           <Route path="messages" element={<PlaceholderScreen title="Messages" icon={<MessageSquare size={48} />} description="Chat directly with matched partners." />} />
-          <Route path="profile" element={<PlaceholderScreen title="Profile" icon={<User size={48} />} description="Manage your business profile and preferences." />} />
+
           <Route
             path="reconnected"
             element={
