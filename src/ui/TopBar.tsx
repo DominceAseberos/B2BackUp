@@ -12,6 +12,7 @@ export function TopBar({ notificationCount = 0 }: TopBarProps) {
       <div className="topbar__inner" style={{ flex: 1 }}>
         <Link to="/sme" className="brand" style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center", gap: 8 }}>
           <img src="/logo.png" alt="B2BackUp Logo" style={{ height: 24, width: "auto" }} />
+          <span style={{ fontSize: 18, fontWeight: 800, color: "var(--ink)", letterSpacing: "-0.02em" }}>B2BackUp</span>
         </Link>
       </div>
       <Link to="/sme/notifications" style={{ position: "relative", color: "var(--ink)", paddingRight: 16 }}>
