@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { ArrowLeftIcon } from "../ui/icons";
@@ -111,8 +111,8 @@ function MatchCard({ result, rank, onSelect }: { result: MatchResult; rank: numb
             justifyContent: "center",
             flexShrink: 0,
           }}>
-            <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 18, lineHeight: 1, color: rankColor }}>{total}</span>
-            <span style={{ fontSize: 9, color: "var(--muted)", letterSpacing: "0.05em", textTransform: "uppercase" }}>score</span>
+            <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 18, lineHeight: 1, color: rankColor }}>{total}%</span>
+            <span style={{ fontSize: 9, color: "var(--muted)", letterSpacing: "0.05em", textTransform: "uppercase" }}>match</span>
           </div>
         </div>
 
@@ -138,7 +138,7 @@ function MatchCard({ result, rank, onSelect }: { result: MatchResult; rank: numb
           className={`btn btn--block ${rank === 0 ? "btn--primary" : "btn--ghost"}`}
           onClick={() => onSelect(result)}
         >
-          {rank === 0 ? "✓ Connect with this partner" : "Connect →"}
+          {rank === 0 ? "✓ Accept Match" : "Accept Match →"}
         </button>
       </div>
     </div>
@@ -159,6 +159,7 @@ const altIcon = createPin("var(--muted)");
 
 /** Auto-runs the matching algorithm and displays top 3 results immediately. No user input needed. */
 export function AutoMatchScreen({ business, affectedPartner, onBack, onSelect }: AutoMatchScreenProps) {
+  const [showSheet, setShowSheet] = useState(true);
   const disruption = affectedPartner.role === "buyer" ? "buyer_unavailable" as const : "supplier_unavailable" as const;
   const need = useMemo(
     () => buildRecoveryNeed(business, affectedPartner, disruption),
@@ -220,56 +221,74 @@ export function AutoMatchScreen({ business, affectedPartner, onBack, onSelect }:
         </button>
       </div>
 
+      {/* Floating Button to re-open sheet if closed */}
+      {!showSheet && (
+        <div style={{ position: "absolute", bottom: 24, left: "50%", transform: "translateX(-50%)", zIndex: 10 }}>
+          <button className="btn btn--primary" style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.15)" }} onClick={() => setShowSheet(true)}>
+            View Recommendations
+          </button>
+        </div>
+      )}
+
       {/* Bottom Sheet / Modal Overlay */}
-      <div style={{
-        position: "absolute",
-        bottom: 0, left: 0, right: 0,
-        zIndex: 10,
-        background: "var(--surface)",
-        borderTopLeftRadius: 24,
-        borderTopRightRadius: 24,
-        boxShadow: "0 -4px 24px rgba(0,0,0,0.1)",
-        display: "flex",
-        flexDirection: "column",
-        maxHeight: "85%", // Allow map to show at top
-      }}>
-        {/* Drag handle pill */}
-        <div style={{ width: "100%", display: "flex", justifyContent: "center", paddingTop: 12, paddingBottom: 12 }}>
-          <div style={{ width: 40, height: 4, borderRadius: 2, background: "var(--hair)" }} />
-        </div>
-
-        <div style={{ padding: "0 20px 16px" }}>
-          <span className="eyebrow">Automated Recommendations</span>
-          <h1 className="title" style={{ fontSize: 24 }}>
-            Top 3 {roleWord}{results.length !== 1 ? "s" : ""} recommended
-          </h1>
-          <p className="subtitle" style={{ fontSize: 13, marginBottom: 0 }}>
-            {results.length} total options available on map.
-          </p>
-        </div>
-
-        {/* Scrollable list of cards */}
+      {showSheet && (
         <div style={{
-          flex: 1,
-          overflowY: "auto",
-          padding: "0 20px 24px",
+          position: "absolute",
+          bottom: 0, left: 0, right: 0,
+          zIndex: 10,
+          background: "var(--surface)",
+          borderTopLeftRadius: 24,
+          borderTopRightRadius: 24,
+          boxShadow: "0 -4px 24px rgba(0,0,0,0.1)",
           display: "flex",
           flexDirection: "column",
-          gap: 16,
-          scrollbarWidth: "none",
+          maxHeight: "85%", // Allow map to show at top
         }}>
-          {results.length === 0 ? (
-            <div style={{ padding: "32px 0", textAlign: "center" }}>
-              <div style={{ fontSize: 36, marginBottom: 12 }}>🔍</div>
-              <div style={{ fontWeight: 600, marginBottom: 6 }}>No replacements found</div>
-            </div>
-          ) : (
-            results.slice(0, 3).map((result, index) => (
-              <MatchCard key={result.partner.id} result={result} rank={index} onSelect={onSelect} />
-            ))
-          )}
+          {/* Drag handle pill / Header */}
+          <div style={{ position: "relative", width: "100%", display: "flex", justifyContent: "center", paddingTop: 12, paddingBottom: 12 }}>
+            <div style={{ width: 40, height: 4, borderRadius: 2, background: "var(--hair)", cursor: "pointer" }} onClick={() => setShowSheet(false)} />
+            <button 
+              type="button" 
+              onClick={() => setShowSheet(false)}
+              style={{ position: "absolute", right: 16, top: 12, background: "none", border: "none", color: "var(--muted)", cursor: "pointer", fontSize: 24, lineHeight: 1 }}
+            >
+              &times;
+            </button>
+          </div>
+
+          <div style={{ padding: "0 20px 16px" }}>
+            <span className="eyebrow">Automated Recommendations</span>
+            <h1 className="title" style={{ fontSize: 24 }}>
+              Top 3 {roleWord}{results.length !== 1 ? "s" : ""} recommended
+            </h1>
+            <p className="subtitle" style={{ fontSize: 13, marginBottom: 0 }}>
+              {results.length} total options available on map.
+            </p>
+          </div>
+
+          {/* Scrollable list of cards */}
+          <div style={{
+            flex: 1,
+            overflowY: "auto",
+            padding: "0 20px 24px",
+            display: "flex",
+            flexDirection: "column",
+            gap: 16,
+            scrollbarWidth: "none",
+          }}>
+            {results.length === 0 ? (
+              <div style={{ padding: "32px 0", textAlign: "center" }}>
+                <div style={{ fontSize: 36, marginBottom: 12 }}>🔍</div>
+                <div style={{ fontWeight: 600, marginBottom: 6 }}>No replacements found</div>
+              </div>
+            ) : (
+              results.slice(0, 3).map((result, index) => (
+                <MatchCard key={result.partner.id} result={result} rank={index} onSelect={onSelect} />
+              ))
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
