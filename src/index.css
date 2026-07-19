@@ -220,6 +220,24 @@ a {
   padding: 22px 0 4px;
 }
 
+.progress__back {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  margin: -4px 0 -4px -8px; /* Expand hit area, pull left */
+  color: var(--ink);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 150ms ease;
+}
+
+.progress__back:active {
+  background: rgba(0, 0, 0, 0.05);
+}
+
 .eyebrow {
   font-size: 12px;
   font-weight: 500;

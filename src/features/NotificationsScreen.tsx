@@ -18,12 +18,14 @@ export function NotificationsScreen({ business, onFix }: NotificationsScreenProp
 
   return (
     <div className="shell">
-      <div className="page-head">
-        <button type="button" className="progress__back" aria-label="Back" onClick={() => navigate(-1)}>
-          <ArrowLeftIcon size={20} />
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "22px 0 4px" }}>
+        <button type="button" className="progress__back" aria-label="Back" onClick={() => navigate(-1)} style={{ marginTop: 2 }}>
+          <ArrowLeftIcon size={24} />
         </button>
-        <span className="eyebrow">Alerts</span>
-        <h1 className="title">Notifications</h1>
+        <div>
+          <span className="eyebrow">Alerts</span>
+          <h1 className="title" style={{ margin: 0 }}>Notifications</h1>
+        </div>
       </div>
 
       <div className="section">
