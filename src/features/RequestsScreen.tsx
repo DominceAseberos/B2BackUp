@@ -17,7 +17,7 @@ interface RequestData {
 const MOCK_REQUESTS: RequestData[] = [
   {
     id: "req-001",
-    buyerName: "Cebu Oil Mills",
+    buyerName: "General Santos Coco Mills",
     context: "Emergency Sourcing (Previous supplier flooded)",
     product: "Copra",
     volumeTons: 25,
