@@ -336,7 +336,7 @@ export const DEMO_BUSINESS: BusinessProfile = {
   members: [
     {
       id: "mem-001",
-      name: "San Pedro Coconut Farm",
+      name: "Juan Dela Cruz",
       location: CITY.davao,
       contactNumber: "+63 917 123 4567",
       products: ["whole_nut", "copra"],
@@ -344,7 +344,7 @@ export const DEMO_BUSINESS: BusinessProfile = {
     },
     {
       id: "mem-002",
-      name: "Buhangin Agri Growers",
+      name: "Maria Santos",
       location: CITY.davao,
       contactNumber: "+63 918 234 5678",
       products: ["copra", "husk"],
@@ -352,7 +352,7 @@ export const DEMO_BUSINESS: BusinessProfile = {
     },
     {
       id: "mem-003",
-      name: "Matina Copra Producers",
+      name: "Pedro Reyes",
       location: CITY.davao,
       contactNumber: "+63 919 345 6789",
       products: ["copra"],
