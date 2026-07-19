@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
 import type { Partner } from "../domain/types";
@@ -36,6 +37,16 @@ export function DiscoverPartnersMapScreen({ onFix }: { onFix?: (partner: Partner
   const currentPartnerIds = new Set(DEMO_BUSINESS.currentPartners.map(p => p.id));
   const potentialSources = NETWORK.filter(p => !currentPartnerIds.has(p.id) && p.disasterStatus === "unaffected");
 
+  const [typeFilter, setTypeFilter] = useState<"all" | "cooperatives" | "processors">("all");
+  const [productFilter, setProductFilter] = useState<"all" | "copra" | "whole_nut">("all");
+
+  const displayedSources = potentialSources.filter(p => {
+    if (typeFilter === "cooperatives" && p.role !== "supplier") return false;
+    if (typeFilter === "processors" && p.role !== "buyer") return false;
+    if (productFilter !== "all" && !p.products.includes(productFilter)) return false;
+    return true;
+  });
+
   const activePartners = DEMO_BUSINESS.currentPartners.filter(p => p.disasterStatus === "unaffected");
   const disruptedPartners = DEMO_BUSINESS.currentPartners.filter(p => p.disasterStatus !== "unaffected");
 
@@ -50,6 +61,41 @@ export function DiscoverPartnersMapScreen({ onFix }: { onFix?: (partner: Partner
           <h2 className="title" style={{ margin: 0 }}>Verified Partners</h2>
           <p className="subtitle" style={{ margin: "4px 0 0" }}>Overview of your network and available sources in Mindanao.</p>
         </div>
+      </div>
+
+      {/* Filter Buttons */}
+      <div style={{ display: "flex", gap: 8, padding: "0 0 16px", overflowX: "auto", flexShrink: 0, scrollbarWidth: "none" }}>
+        <button 
+          onClick={() => setTypeFilter("all")}
+          style={{ padding: "6px 16px", borderRadius: 20, fontSize: 13, fontWeight: 500, whiteSpace: "nowrap", border: typeFilter === "all" ? "none" : "1px solid var(--hair)", background: typeFilter === "all" ? "var(--ink)" : "var(--surface)", color: typeFilter === "all" ? "white" : "var(--ink)", cursor: "pointer" }}
+        >
+          All Types
+        </button>
+        <button 
+          onClick={() => setTypeFilter("cooperatives")}
+          style={{ padding: "6px 16px", borderRadius: 20, fontSize: 13, fontWeight: 500, whiteSpace: "nowrap", border: typeFilter === "cooperatives" ? "none" : "1px solid var(--hair)", background: typeFilter === "cooperatives" ? "var(--ink)" : "var(--surface)", color: typeFilter === "cooperatives" ? "white" : "var(--ink)", cursor: "pointer" }}
+        >
+          Cooperatives
+        </button>
+        <button 
+          onClick={() => setTypeFilter("processors")}
+          style={{ padding: "6px 16px", borderRadius: 20, fontSize: 13, fontWeight: 500, whiteSpace: "nowrap", border: typeFilter === "processors" ? "none" : "1px solid var(--hair)", background: typeFilter === "processors" ? "var(--ink)" : "var(--surface)", color: typeFilter === "processors" ? "white" : "var(--ink)", cursor: "pointer" }}
+        >
+          Processors / Mills
+        </button>
+        <div style={{ width: 1, height: 20, background: "var(--hair)", margin: "0 4px", alignSelf: "center" }} />
+        <button 
+          onClick={() => setProductFilter(productFilter === "copra" ? "all" : "copra")}
+          style={{ padding: "6px 16px", borderRadius: 20, fontSize: 13, fontWeight: 500, whiteSpace: "nowrap", border: productFilter === "copra" ? "1px solid var(--brand)" : "1px solid var(--hair)", background: productFilter === "copra" ? "var(--brand-tint)" : "var(--surface)", color: productFilter === "copra" ? "var(--brand)" : "var(--ink)", cursor: "pointer" }}
+        >
+          🥥 Copra
+        </button>
+        <button 
+          onClick={() => setProductFilter(productFilter === "whole_nut" ? "all" : "whole_nut")}
+          style={{ padding: "6px 16px", borderRadius: 20, fontSize: 13, fontWeight: 500, whiteSpace: "nowrap", border: productFilter === "whole_nut" ? "1px solid var(--brand)" : "1px solid var(--hair)", background: productFilter === "whole_nut" ? "var(--brand-tint)" : "var(--surface)", color: productFilter === "whole_nut" ? "var(--brand)" : "var(--ink)", cursor: "pointer" }}
+        >
+          🥥 Whole Nut
+        </button>
       </div>
       
       <div style={{ flex: 1, minHeight: 0, borderRadius: "var(--radius) var(--radius) 0 0", overflow: "hidden", border: "1px solid var(--hair)", borderBottom: "none" }}>
@@ -68,7 +114,7 @@ export function DiscoverPartnersMapScreen({ onFix }: { onFix?: (partner: Partner
           </Marker>
 
           {/* Potential Sources Markers */}
-          {potentialSources.map(partner => (
+          {displayedSources.map(partner => (
             <Marker 
               key={partner.id} 
               position={[partner.location.lat, partner.location.lng]}
